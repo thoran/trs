@@ -1,10 +1,7 @@
 # trs/test/ToyRobot
 
-# 20120401
-# 0.7.0
-
-# Changes since 0.6: 
-# 0. None---version number bump.  
+# 20121009
+# 0.8.0
 
 require_relative '../lib/ToyRobot'
 gem 'minitest', '~> 2'

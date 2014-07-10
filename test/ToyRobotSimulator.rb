@@ -1,10 +1,7 @@
 # trs/test/ToyRobot
 
-# 20120401
-# 0.7.0
-
-# Changes since 0.6: 
-# 1. 
+# 20121009
+# 0.8.0
 
 require_relative '../lib/ToyRobotSimulator'
 gem 'minitest', '~> 2'
@@ -23,24 +20,9 @@ describe ToyRobotSimulator do
       trs.instance_variable_get(:@tabletop_dimensions).must_equal '4x5'
     end
     
-    it 'must initialize a default tabletop' do
-      trs = ToyRobotSimulator.new
-      trs.tabletop.wont_equal nil
-    end
-    
-    it 'must initialize a default toy robot' do
-      trs = ToyRobotSimulator.new
-      trs.send(:toy_robots).wont_equal nil
-    end
-    
   end
   
   describe 'setting attributes' do
-    
-    it 'will initialize the tabletop upon setting the tabletop dimensions' do
-      trs = ToyRobotSimulator.new(:tabletop_dimensions => '4x5')
-      trs.instance_variable_get(:@tabletop).class.must_equal Tabletop
-    end
     
     it 'must be able to set the tabletop attribute directly' do
       trs = ToyRobotSimulator.new
@@ -56,7 +38,8 @@ describe ToyRobotSimulator do
       @trs = ToyRobotSimulator.new
       @tabletop = Tabletop.new('5x5')
       @trs.tabletop = @tabletop
-      @toy_robot = @trs.send(:toy_robots).first
+      @trs.send(:init_toy_robot)
+      @toy_robot = @trs.send(:toy_robot)
     end
     
     it 'must remove the next command from the command list' do

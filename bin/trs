@@ -1,34 +1,23 @@
 #!/usr/bin/env ruby
 # trs
 
-# 20120401
-# 0.7.0
+# 20121009
+# 0.8.0
 
 # Changes since 0.6: 
-# 1. Removed setting of defaults for programs_directory, since this is now done in ToyRobotSimulator::defaults.  
-# 2. Removed setting of defaults for tabletop_dimensions, since this is now done in ToyRobotSimulator::defaults.  
-# 3. Removed setting of defaults for number_of_toy_robots, since this is now done in ToyRobotSimulator::defaults.  
 
 require_relative '../lib/Switches'
 require_relative '../lib/ToyRobotSimulator'
 
 switches = Switches.new do |s|
-  s.set(:p, :program)
+  s.set(:p, :program_name)
   s.set(:d, :directory, :programs_directory)
   s.set(:t, :tabletop, :tabletop_dimensions)
-  s.set(:n, :number_of_toy_robots)
-  s.set(:e?, :extras?)
-  s.set(:r, :random)
 end
 
-# The order of setting attributes on ToyRobotSimulator is significant, which probably shouldn't be the case.  
-
 trs = ToyRobotSimulator.new
-trs.random = switches.random
-trs.extras = switches.extras? || false
-trs.program = switches.program if switches.program
-trs.programs_directory = switches.programs_directory
-trs.tabletop_dimensions = switches.tabletop_dimensions
-trs.number_of_toy_robots = switches.number_of_toy_robots
-trs.random = switches.random
+trs.program_name = switches.program_name if switches.program_name
+trs.programs_directory = switches.programs_directory if switches.programs_directory
+trs.tabletop_dimensions = switches.tabletop_dimensions if switches.tabletop_dimensions
+trs.setup
 trs.run

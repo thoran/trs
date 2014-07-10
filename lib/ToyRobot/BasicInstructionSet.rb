@@ -1,10 +1,7 @@
 # ToyRobot::BasicInstructionSet
 
-# 20120401
-# 0.7.0
-
-# Changes since 0.6: 
-# 0. None---version number bump.  
+# 20121009
+# 0.8.0
 
 class ToyRobot
   module BasicInstructionSet
@@ -44,17 +41,17 @@ class ToyRobot
         when :left; self.f = 'WEST'
         when :right; self.f = 'EAST'
         end
-      when 'SOUTH';
+      when 'SOUTH'
         case direction.to_sym
         when :left; self.f = 'EAST'
         when :right; self.f = 'WEST'
         end
-      when 'EAST';
+      when 'EAST'
         case direction.to_sym
         when :left; self.f = 'NORTH'
         when :right; self.f = 'SOUTH'
         end
-      when 'WEST'; 
+      when 'WEST'
         case direction.to_sym
         when :left; self.f = 'SOUTH'
         when :right; self.f = 'NORTH'
@@ -73,18 +70,10 @@ class ToyRobot
     end
     
     def report
-      if extras
-        unless x && y && f
-          puts "#{name}: -,-,-"
-        else
-          puts "#{name}: #{x},#{y},#{f}"
-        end
+      unless x && y && f
+        puts "-,-,-"
       else
-        unless x && y && f
-          puts "-,-,-"
-        else
-          puts "#{x},#{y},#{f}"
-        end
+        puts "#{x},#{y},#{f}"
       end
     end
     

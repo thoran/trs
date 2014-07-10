@@ -1,7 +1,7 @@
 # trs/test/Tabletop
 
-# 20120401
-# 0.7.0
+# 20121009
+# 0.8.0
 
 require_relative '../lib/Tabletop'
 gem 'minitest', '~> 2'

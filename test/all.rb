@@ -1,10 +1,7 @@
 # trs/test/all
 
-# 20120401
-# 0.7.0
-
-# Changes since 0.6: 
-# 1. Removed the gem specification and the require for minitest from here, since each test file has this anyway.  
+# 20121009
+# 0.8.0
 
 require_relative './Tabletop'
 require_relative './ToyRobot'

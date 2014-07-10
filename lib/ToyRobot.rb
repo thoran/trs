@@ -1,36 +1,27 @@
 # ToyRobot
 
-# 20120401
-# 0.7.0
+# 20121009
+# 0.8.0
 
-# Changes since 0.6: 
-# 1. Changed the require of the string instance methods to the new namespace.  
-
-require_relative './Thoran/String/InstanceMethods'
 require_relative './ToyRobot/BasicInstructionSet'
-require_relative './ToyRobot/Randomness'
 require 'observer'
 
 class ToyRobot
   
   include Observable
   
-  attr_accessor :tabletop, :name, :x, :y, :f, :old_x, :old_y, :old_f, :extras
-  attr_reader :random
+  attr_accessor :tabletop, :x, :y, :f, :old_x, :old_y, :old_f
   attr_writer :command_list
   
-  def initialize(tabletop = nil, instruction_set = BasicInstructionSet, name = nil)
+  def initialize(tabletop = nil, instruction_set = BasicInstructionSet)
     @tabletop = tabletop
     self.class.send(:include, instruction_set)
-    init_name(name)
     @x = nil
     @y = nil
     @f = nil
     @old_x = nil
     @old_y = nil
     @old_f = nil
-    @extras = false
-    @random = false
   end
   
   def load(program)
@@ -39,25 +30,8 @@ class ToyRobot
     end
   end
   
-  def random=(random)
-    if random
-      @random = random
-      ToyRobot.send(:include, Randomness)
-      init_command_list
-    end
-  end
-  
-  # Only to be used if there is one robot, or if the robots are to be run sequentially.  
-  def run
-    until expired? do
-      toy_robot.tick
-    end
-  end
-  
   def tick
     if current_command = command_list.shift
-      puts "#{name}'s pending command list: #{command_list.inject([]){|a,e| a << e.wrap('"')}.join(', ')}" if extras
-      puts "#{name}'s next command is #{current_command}" if extras
       if unary_instruction?(current_command)
         if placed?
           self.send(current_command.downcase)
@@ -68,7 +42,6 @@ class ToyRobot
         self.send(command.downcase, x.to_i, y.to_i, f)
       end
     end
-    report if extras && !expired?
   end
   
   def expired?
@@ -80,18 +53,6 @@ class ToyRobot
   end
   
   private
-  
-  def init_name(name)
-    @name = (
-      if name
-        name
-      else
-        name = ''
-        name << ('a'..'z').to_a[rand(26)]
-        name
-      end
-    )
-  end
   
   def command_list
     @command_list
