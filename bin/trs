@@ -1,8 +1,12 @@
 #!/usr/bin/env ruby
 # trs
 
-# 20120330
-# 0.3.0
+# 20120331
+# 0.4.0
+
+# Changes since 0.3: 
+# 1. Initialization of the tabletop now happens as soon as the trs.tabletop_dimensions variable is set.  
+# 2. Initialization of the toy robots now happens as soon as the trs.number_of_toy_robots variable is set.  
 
 require_relative '../lib/Switches'
 require_relative '../lib/ToyRobotSimulator'
@@ -16,11 +20,9 @@ switches = Switches.new do |s|
 end
 
 trs = ToyRobotSimulator.new
-trs.program = switches.program
-trs.programs_directory = switches.programs_directory || '../programs'
+trs.program = switches.program if switches.program
+trs.programs_directory = switches.programs_directory || File.join(File.dirname(__FILE__), '../programs')
 trs.tabletop_dimensions = switches.tabletop_dimensions || '5x5'
 trs.number_of_toy_robots = switches.number_of_toy_robots || 1
 trs.extras = switches.extras? || false
-trs.init_tabletop
-trs.init_toy_robots
 trs.run

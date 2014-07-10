@@ -1,13 +1,21 @@
 # Tabletop
 
-# 20120330
-# 0.3.0
+# 20120331
+# 0.4.0
+
+# Changes since 0.3: 
+# 1. - @toy_robots array---I never liked it being there, since the tabletop shouldn't need to have 'awareness' of all robots, unless they are placed in the grid, and even then, it is quite sufficient for the robot to be placed into the grid only at the current position.  
+# 2. ~ update(), so as it receives a toy_robot object, rather making use of the @toy_robots array.  
+# 3. - attr_accessor :toy_robots, since there is no @toy_robots array anymore.  
+# 4. ~ update(), so as it doesn't send the report message to a toy robot, which is now handled in ToyRobotSimulator.  
+# 5. ~ valid_location(), so as it will check to see if there is another toy robot is in the proposed location the toy robot wishes to move.  
+# 6. ~ update(), so as it doesn't draw itself from within itself.  It should be able to update it's state without drawing itself, extras or no extras.  
 
 require_relative './String'
 
 class Tabletop
   
-  attr_accessor :x_dimension, :y_dimension, :toy_robots, :grid, :extras
+  attr_accessor :x_dimension, :y_dimension, :grid, :extras
   
   def initialize(x_dimension, y_dimension = nil)
     if y_dimension.nil?
@@ -16,20 +24,20 @@ class Tabletop
     @x_dimension = x_dimension.to_i
     @y_dimension = y_dimension.to_i
     @extras = false
-    @toy_robots = []
     init_grid
   end
   
-  def update(name, x, y, f)
-    toy_robot = toy_robots.detect{|toy_robot| toy_robot.name == name}
-    toy_robot.report if extras
+  def update(toy_robot)
     grid[toy_robot.old_x][toy_robot.old_y] = nil
-    grid[x][y] = toy_robot
-    draw if extras
+    grid[toy_robot.x][toy_robot.y] = toy_robot
   end
   
-  def valid_location?(x, y)
-    x.to_i.between?(0, x_dimension - 1) && y.to_i.between?(0, y_dimension - 1) ? true : false
+  def valid_location?(x,y)
+    if extras
+      x.to_i.between?(0, x_dimension - 1) && y.to_i.between?(0, y_dimension - 1) && grid[x][y].nil? ? true : false
+    else
+      x.to_i.between?(0, x_dimension - 1) && y.to_i.between?(0, y_dimension - 1) ? true : false
+    end
   end
   
   def draw

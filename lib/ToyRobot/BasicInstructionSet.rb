@@ -1,7 +1,12 @@
 # ToyRobot::BasicInstructionSet
 
-# 20120330
-# 0.3.0
+# 20120331
+# 0.4.0
+
+# Changes since 0.3: 
+# 1. ~ place(), so as the observer notification is being returned the toy_robot object and not a bunch of states of that object.  
+# 2. ~ move(), so as the observer notification is being returned the toy_robot object and not a bunch of states of that object.  
+# 3. ~ turn(), so as the observer notification is being returned the toy_robot object and not a bunch of states of that object.  
 
 class ToyRobot
   module BasicInstructionSet
@@ -11,12 +16,12 @@ class ToyRobot
       if tabletop.valid_location?(x, y)
         self.x, self.y, self.f = x, y, f
         changed
-        notify_observers(name, x, y, f)
+        notify_observers(self)
       end
     end
     
     def move
-      self.old_x, self.old_y = x, y
+      self.old_x, self.old_y = self.x, self.y
       if valid_move?
         case self.f
         when 'NORTH'; self.old_y = self.y; self.y += 1
@@ -25,7 +30,7 @@ class ToyRobot
         when 'WEST'; self.old_x = self.x; self.x -= 1
         end
         changed
-        notify_observers(name, x, y, f)
+        notify_observers(self)
       end
     end
     
@@ -54,7 +59,7 @@ class ToyRobot
         end
       end
       changed
-      notify_observers(name, x, y, f)
+      notify_observers(self)
     end
     
     def left
@@ -65,11 +70,19 @@ class ToyRobot
       turn(:right)
     end
     
-    def report(extras = false)
+    def report
       if extras
-        puts "#{name}: #{x},#{y},#{f}"
+        unless x && y && f
+          puts "#{name}: -,-,-"
+        else
+          puts "#{name}: #{x},#{y},#{f}"
+        end
       else
-        puts "#{x},#{y},#{f}"
+        unless x && y && f
+          puts "-,-,-"
+        else
+          puts "#{x},#{y},#{f}"
+        end
       end
     end
     

@@ -22,4 +22,8 @@ class String
     end
   end
   
+  def wrap(wrapper)
+    wrapper + self + wrapper
+  end
+  
 end
