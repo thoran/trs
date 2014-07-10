@@ -1,5 +1,26 @@
 #!/usr/bin/env ruby
+# trs
+
+# 20120330
+# 0.3.0
 
 require_relative '../lib/Switches'
+require_relative '../lib/ToyRobotSimulator'
 
-ToyRobotSimulator.new
+switches = Switches.new do |s|
+  s.set(:p, :program)
+  s.set(:d, :directory, :programs_directory)
+  s.set(:t, :tabletop, :tabletop_dimensions)
+  s.set(:n, :number_of_toy_robots)
+  s.set(:e?, :extras?)
+end
+
+trs = ToyRobotSimulator.new
+trs.program = switches.program
+trs.programs_directory = switches.programs_directory || '../programs'
+trs.tabletop_dimensions = switches.tabletop_dimensions || '5x5'
+trs.number_of_toy_robots = switches.number_of_toy_robots || 1
+trs.extras = switches.extras? || false
+trs.init_tabletop
+trs.init_toy_robots
+trs.run

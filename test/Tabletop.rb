@@ -1,3 +1,5 @@
+require 'minitest/autorun'
+
 describe Tabletop do
   
   describe 'initialization' do

@@ -1,91 +1,40 @@
-module ToyRobot::BasicInstructionSet
-  
-  def place(x, y, f)
-    if valid_location?(x, y)
-      @x, @y, @f = x, y, f
-      changed
-      notify_observers(name, x, y, f)
-    end
-  end
-  
-  def move
-    if valid_move?
-      case f
-      when 'NORTH'; y += 1
-      when 'SOUTH'; y -= 1
-      when 'EAST'; x += 1
-      when 'WEST'; x -= 1
-      end
-      changed
-      notify_observers(name, x, y, f)
-    end
-  end
-  
-  def turn(direction)
-    case f
-    when 'NORTH'
-      case direction.to_sym
-      when :left; f = 'WEST'
-      when :right; f = 'EAST'
-      end
-    when 'SOUTH';
-      case direction.to_sym
-      when :left; f = 'EAST'
-      when :right; f = 'WEST'
-      end
-    when 'EAST';
-      case direction.to_sym
-      when :left; f = 'NORTH'
-      when :right; f = 'SOUTH'
-      end
-    when 'WEST'; 
-      case direction.to_sym
-      when :left; f = 'SOUTH'
-      when :right; f = 'NORTH'
-      end
-    end
-    changed
-    notify_observers(name, x, y, f)
-  end
-  
-  def left
-    turn(:left)
-  end
-  
-  def right
-    turn(:right)
-  end
-  
-  def report
-    puts "#{x},#{y},#{f}"
-  end
-  
-end # module ToyRobot::BasicInstructionSet
+# ToyRobot
+
+# 20120330
+# 0.3.0
+
+require_relative './ToyRobot/BasicInstructionSet'
+require 'observer'
 
 class ToyRobot
   
   include Observable
   
-  attr_accessor :command_list, :name, :x, :y, :f
+  attr_accessor :tabletop, :command_list, :name, :x, :y, :f, :old_x, :old_y, :old_f, :extras
   
-  def initialize(instruction_set = BasicInstructionSet, name = nil)
+  def initialize(tabletop, instruction_set = BasicInstructionSet, name = nil)
+    @tabletop = tabletop
     self.class.send(:include, instruction_set)
     @name = (
       if name
         name
       else
         name = ''
-        (rand(8) + 1).times{name << ('a'..'z').to_a[rand(26)]}
+        # (rand(8) + 1).times{name << ('a'..'z').to_a[rand(26)]}
+        name << ('a'..'z').to_a[rand(26)]
         name
       end
     )
     @x = 0
     @y = 0
     @f = 'NORTH'
+    @old_x = 0
+    @old_y = 0
+    @old_f = 'NORTH'
   end
   
   def load(program)
-    command_list = program.split("\n")
+    @command_list = program.split("\n")
   end
   
   def run
@@ -95,26 +44,16 @@ class ToyRobot
   end
   
   def tick
-    current_command = command_list.pop
+    p command_list if extras
+    current_command = command_list.shift
     if current_command
-      if unary?(s)
+      if unary?(current_command)
         self.send(current_command.downcase)
       else
-        place, arguments = current_command.split
+        command, arguments = current_command.split
         x, y, f = arguments.split(',')
-        self.send(place.downcase, x, y, f)
+        self.send(command.downcase, x.to_i, y.to_i, f)
       end
-    end
-  end
-  
-  private
-  
-  def valid_move?
-    case f
-    when 'NORTH'; valid_location?(x, y+1)
-    when 'SOUTH'; valid_location?(x, y-1)
-    when 'EAST'; valid_location?(x+1, y)
-    when 'WEST'; valid_location?(x-1, y)
     end
   end
   
@@ -122,8 +61,19 @@ class ToyRobot
     command_list.empty?
   end
   
+  private
+  
+  def valid_move?
+    case self.f
+    when 'NORTH'; tabletop.valid_location?(self.x, self.y+1)
+    when 'SOUTH'; tabletop.valid_location?(self.x, self.y-1)
+    when 'EAST'; tabletop.valid_location?(self.x+1, self.y)
+    when 'WEST'; tabletop.valid_location?(self.x-1, self.y)
+    end
+  end
+  
   def unary?(s)
     s =~ /PLACE/ ? false : true
   end
   
-end # class ToyRobot
+end
