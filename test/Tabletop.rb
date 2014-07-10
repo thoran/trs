@@ -23,4 +23,23 @@ describe Tabletop do
     
   end
   
+  describe 'how a toy robot knows that a potential move is valid or not' do
+    
+    it 'should be able to determine that a particular set of co-ordinates is valid and therefore on the tabletop or not' do
+      tabletop = Tabletop.new('5x5')
+      tabletop.valid_location?(6,6).must_equal false
+      tabletop.valid_location?(5,5).must_equal false
+      tabletop.valid_location?(4,5).must_equal false
+      tabletop.valid_location?(5,4).must_equal false
+      tabletop.valid_location?(4,4).must_equal true
+      tabletop.valid_location?(0,4).must_equal true
+      tabletop.valid_location?(4,0).must_equal true
+      tabletop.valid_location?(0,0).must_equal true
+      tabletop.valid_location?(-1,0).must_equal false
+      tabletop.valid_location?(0,-1).must_equal false
+      tabletop.valid_location?(-1,-1).must_equal false
+    end
+    
+  end
+  
 end

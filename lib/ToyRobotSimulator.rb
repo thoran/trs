@@ -1,16 +1,13 @@
 # ToyRobotSimulator
 
 # 20120331
-# 0.4.0
+# 0.5.0
 
-# Changes since 0.3: 
-# 1. ~ run(), so as toy_robots are not inserted into the Tabletop object.  
-# 2. ~ run(), by removing the unused reporting on toy robots at the end of run(), since it wasn't being used and since that has been removed from Tabletop#update and placed instead into update() here.  I think it is marginally better that the tabletop not have responsibility for outputting the toy robot's status.  
-# 3. + tabletop_dimensions=(), such that as soon as that variable is set, the init_tabletop() method can be run.  
-# 4. + number_of_toy_robots=(), such that as soon as that variable is set, the init_toy_robots() method can be run.  
-# 5. ~ update(), such the call to draw the tabletop is here now and has been removed from Tabletop#update.  
-# 6. ~ update(), moved toy_robot.report'ing to ToyRobot#tick.  
-# 7. ~ run(), so that it rather than update() does the tabletop drawing, since it was being drawn for every update per robot, not per tick.  
+# Changes since 0.4: 
+# 1. ~ program(), so as it will raise an error if there is nothing in the programs_directory to be loaded at random.  
+# 2. + random=(), so as a toy robot can be fed a random program.  
+# 3. ~ initialize(), so as it will be able to set random via the contructor.  
+# 4. ~ initialize(), so as to fix the missing capability to set the extra features via the constructor.  
 
 require_relative './Array'
 require_relative './File'
@@ -22,7 +19,7 @@ class ProgramNotFoundError < RuntimeError; end
 class ToyRobotSimulator
   
   attr_accessor :tabletop, :programs_directory
-  attr_reader :tabletop_dimensions, :number_of_toy_robots, :extras
+  attr_reader :tabletop_dimensions, :number_of_toy_robots, :extras, :random
   attr_writer :toy_robots, :program
   
   class << self
@@ -45,6 +42,8 @@ class ToyRobotSimulator
     self.programs_directory = options[:programs_directory] if options[:programs_directory]
     self.tabletop_dimensions = options[:tabletop_dimensions] if options[:tabletop_dimensions]
     self.number_of_toy_robots = options[:number_of_toy_robots] if options[:number_of_toy_robots]
+    self.extras = options[:extras] if options[:extras]
+    self.random = options[:random] if options[:random]
   end
   
   def run
@@ -86,16 +85,20 @@ class ToyRobotSimulator
   
   def number_of_toy_robots=(number_of_toy_robots)
     if number_of_toy_robots
-      @number_of_toy_robots = number_of_toy_robots
-      init_toy_robots(number_of_toy_robots)
+      @number_of_toy_robots = number_of_toy_robots.to_i
+      init_toy_robots(@number_of_toy_robots)
     end
   end
   
   def extras=(extras)
     if extras
       @extras = extras
-      tabletop.extras = extras
-      toy_robots.each{|toy_robot| toy_robot.extras = extras}
+    end
+  end
+  
+  def random=(random)
+    if random
+      @random = random.to_i
     end
   end
   
@@ -108,9 +111,12 @@ class ToyRobotSimulator
   end
   
   def init_toy_robots(number_of_toy_robots = nil)
-    number_of_toy_robots = (number_of_toy_robots ? number_of_toy_robots : self.number_of_toy_robots).to_i
+    number_of_toy_robots = (number_of_toy_robots ? number_of_toy_robots : self.number_of_toy_robots)
     toy_robots(number_of_toy_robots)
     toy_robots.each do |toy_robot|
+      toy_robot.tabletop = tabletop
+      toy_robot.extras = extras
+      toy_robot.random = random
       toy_robot.load(program)
       toy_robot.add_observer(self)
     end
@@ -120,16 +126,16 @@ class ToyRobotSimulator
     @toy_robots ||= (
       toy_robots = []
       n.times do
-        toy_robot = ToyRobot.new(tabletop)
-        toy_robot.extras = extras
-        toy_robots << toy_robot
+        toy_robots << ToyRobot.new
       end
       toy_robots
     )
   end
   
   def program(program_name = nil)
-    if @program && !@program.empty?
+    if random
+      nil
+    elsif @program && !@program.empty?
       program(@program.shift)
     elsif program_name
       begin
@@ -157,9 +163,13 @@ class ToyRobotSimulator
     else
       begin
         program_filenames = Dir["#{programs_directory}/*.program"]
-        random_program_filename = program_filenames[rand(program_filenames.size)]
-        File.read(random_program_filename)
-      rescue
+        if program_filenames.empty?
+          raise ProgramNotFoundError
+        else
+          random_program_filename = program_filenames[rand(program_filenames.size)]
+          File.read(random_program_filename)
+        end
+      rescue ProgramNotFoundError => e
         puts "No program found."
         exit
       end

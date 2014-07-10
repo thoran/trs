@@ -1,15 +1,10 @@
 # Tabletop
 
 # 20120331
-# 0.4.0
+# 0.5.0
 
-# Changes since 0.3: 
-# 1. - @toy_robots array---I never liked it being there, since the tabletop shouldn't need to have 'awareness' of all robots, unless they are placed in the grid, and even then, it is quite sufficient for the robot to be placed into the grid only at the current position.  
-# 2. ~ update(), so as it receives a toy_robot object, rather making use of the @toy_robots array.  
-# 3. - attr_accessor :toy_robots, since there is no @toy_robots array anymore.  
-# 4. ~ update(), so as it doesn't send the report message to a toy robot, which is now handled in ToyRobotSimulator.  
-# 5. ~ valid_location(), so as it will check to see if there is another toy robot is in the proposed location the toy robot wishes to move.  
-# 6. ~ update(), so as it doesn't draw itself from within itself.  It should be able to update it's state without drawing itself, extras or no extras.  
+# Changes since 0.4: 
+# 0. None since Tabletop, appropriately, seems pretty stable now!  
 
 require_relative './String'
 

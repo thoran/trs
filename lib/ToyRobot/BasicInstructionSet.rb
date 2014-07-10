@@ -1,19 +1,23 @@
 # ToyRobot::BasicInstructionSet
 
 # 20120331
-# 0.4.0
+# 0.5.0
 
-# Changes since 0.3: 
-# 1. ~ place(), so as the observer notification is being returned the toy_robot object and not a bunch of states of that object.  
-# 2. ~ move(), so as the observer notification is being returned the toy_robot object and not a bunch of states of that object.  
-# 3. ~ turn(), so as the observer notification is being returned the toy_robot object and not a bunch of states of that object.  
+# Changes since 0.4: 
+# 1. ~ place(), since the old locations were being given the new locations, but I need to check to see if the toy robot has been placed as yet, in which case I do need to use the new locations.  
+# 2. ~ place(), so as the assignments of the old values will only take place if the new values are valid, since otherwise the values shouldn't be changing.  
+# 3. ~ move(), so as to make the same changes as made to place().  
 
 class ToyRobot
   module BasicInstructionSet
     
     def place(x, y, f)
-      self.old_x, self.old_y, self.old_f = x, y, f
-      if tabletop.valid_location?(x, y)
+      if tabletop.valid_location?(x,y)
+        if placed?
+          self.old_x, self.old_y, self.old_f = self.x, self.y, self.f
+        else
+          self.old_x, self.old_y, self.old_f = x, y, f
+        end
         self.x, self.y, self.f = x, y, f
         changed
         notify_observers(self)
@@ -21,8 +25,8 @@ class ToyRobot
     end
     
     def move
-      self.old_x, self.old_y = self.x, self.y
       if valid_move?
+        self.old_x, self.old_y = self.x, self.y
         case self.f
         when 'NORTH'; self.old_y = self.y; self.y += 1
         when 'SOUTH'; self.old_y = self.y; self.y -= 1
