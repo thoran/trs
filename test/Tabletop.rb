@@ -1,3 +1,8 @@
+# trs/test/Tabletop
+
+# 20120401
+# 0.6.0
+
 require_relative '../lib/Tabletop'
 require 'minitest/autorun'
 
@@ -16,7 +21,7 @@ describe Tabletop do
     end
     
     it 'should optionally receive x and y dimensions as separate parameters' do
-      tabletop = Tabletop.new(4, 5)
+      tabletop = Tabletop.new(4,5)
       tabletop.x_dimension.must_equal 4
       tabletop.y_dimension.must_equal 5
     end
@@ -38,6 +43,42 @@ describe Tabletop do
       tabletop.valid_location?(-1,0).must_equal false
       tabletop.valid_location?(0,-1).must_equal false
       tabletop.valid_location?(-1,-1).must_equal false
+    end
+    
+  end
+  
+  describe 'getting a value in the grid' do
+    
+    it 'must be able to done via the grid method' do
+      tabletop = Tabletop.new('5x5')
+      tabletop.grid[0][0].must_equal nil
+      tabletop.grid[0][0] = 'toy_robot'
+      tabletop.grid[0][0].must_equal 'toy_robot'
+    end
+    
+    it 'must be able to done via the bracket method' do
+      tabletop = Tabletop.new('5x5')
+      tabletop[0,0].must_equal nil
+      tabletop.grid[0][0] = 'toy_robot'
+      tabletop[0,0].must_equal 'toy_robot'
+    end
+    
+  end
+  
+  describe 'setting a value in the grid' do
+    
+    it 'must be able to done via the grid method' do
+      tabletop = Tabletop.new('5x5')
+      tabletop.grid[0][0].must_equal nil
+      tabletop.grid[0][0] = 'toy_robot'
+      tabletop.grid[0][0].must_equal 'toy_robot'
+    end
+    
+    it 'must be able to done via the bracket method' do
+      tabletop = Tabletop.new('5x5')
+      tabletop[0,0].must_equal nil
+      tabletop[0,0] = 'toy_robot'
+      tabletop[0,0].must_equal 'toy_robot'
     end
     
   end

@@ -1,19 +1,23 @@
 # ToyRobot::Randomness
 
-# 20120331
-# 0.5.0
+# 20120401
+# 0.6.0
+
+# Changes since 0.5: 
+# 1. p @command_list now only happens if extras is true.  
 
 class ToyRobot
   module Randomness
     
     def init_command_list
-      p @command_list = (
+      @command_list = (
         command_list = []
         random.times do
           command_list << random_command
         end
         command_list
       )
+      p @command_list if extras
     end
     
     def random_command

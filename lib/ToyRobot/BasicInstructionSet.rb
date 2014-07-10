@@ -1,12 +1,10 @@
 # ToyRobot::BasicInstructionSet
 
-# 20120331
-# 0.5.0
+# 20120401
+# 0.6.0
 
-# Changes since 0.4: 
-# 1. ~ place(), since the old locations were being given the new locations, but I need to check to see if the toy robot has been placed as yet, in which case I do need to use the new locations.  
-# 2. ~ place(), so as the assignments of the old values will only take place if the new values are valid, since otherwise the values shouldn't be changing.  
-# 3. ~ move(), so as to make the same changes as made to place().  
+# Changes since 0.5: 
+# 0. None---version number bump.  
 
 class ToyRobot
   module BasicInstructionSet

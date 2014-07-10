@@ -1,11 +1,10 @@
 # ToyRobot
 
-# 20120331
-# 0.5.0
+# 20120401
+# 0.6.0
 
-# Changes since 0.4: 
-# 1. ~ tick(), so as it makes reference to placed?(), rather than implement that logic itself.  
-# 2. + placed?().  
+# Changes since 0.5: 
+# 0. None---version number bump.  
 
 require_relative './String'
 require_relative './ToyRobot/BasicInstructionSet'

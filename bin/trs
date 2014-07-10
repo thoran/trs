@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 # trs
 
-# 20120331
-# 0.5.0
+# 20120401
+# 0.6.0
 
-# Changes since 0.4: 
-# 1. + s.set(:r?, :random?).  
+# Changes since 0.5: 
+# 0. None---version number bump.  
 
 require_relative '../lib/Switches'
 require_relative '../lib/ToyRobotSimulator'

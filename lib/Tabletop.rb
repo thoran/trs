@@ -1,10 +1,12 @@
 # Tabletop
 
-# 20120331
-# 0.5.0
+# 20120401
+# 0.6.0
 
-# Changes since 0.4: 
-# 0. None since Tabletop, appropriately, seems pretty stable now!  
+# Changes since 0.5: 
+# 1. Made init_grid() private.  
+# 2. + [](), so as I don't have to make use of the grid accessor in order to retrieve a co-ordinate.  
+# 3. + []=(), so as I don't have to make use of the grid accessor in order to retrieve a co-ordinate.  
 
 require_relative './String'
 
@@ -27,6 +29,14 @@ class Tabletop
     grid[toy_robot.x][toy_robot.y] = toy_robot
   end
   
+  def [](x,y)
+    grid[x][y]
+  end
+  
+  def []=(x, y, toy_robot)
+    grid[x][y] = toy_robot
+  end
+  
   def valid_location?(x,y)
     if extras
       x.to_i.between?(0, x_dimension - 1) && y.to_i.between?(0, y_dimension - 1) && grid[x][y].nil? ? true : false
@@ -47,6 +57,8 @@ class Tabletop
       puts
     end
   end
+  
+  private
   
   def init_grid
     @grid = []

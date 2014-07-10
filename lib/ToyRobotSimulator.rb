@@ -1,13 +1,10 @@
 # ToyRobotSimulator
 
-# 20120331
-# 0.5.0
+# 20120401
+# 0.6.0
 
-# Changes since 0.4: 
-# 1. ~ program(), so as it will raise an error if there is nothing in the programs_directory to be loaded at random.  
-# 2. + random=(), so as a toy robot can be fed a random program.  
-# 3. ~ initialize(), so as it will be able to set random via the contructor.  
-# 4. ~ initialize(), so as to fix the missing capability to set the extra features via the constructor.  
+# Changes since 0.5: 
+# 0. None--version number bump.  
 
 require_relative './Array'
 require_relative './File'
