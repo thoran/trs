@@ -9,6 +9,10 @@ class Tabletop
     @x_dimension = x_dimension
     @y_dimension = y_dimension
     @toy_robots = []
+    @grid = []
+    (0..y_dimension - 1).inject(@grid) do |a,e|
+      a << (0..x_dimension - 1).inject([]){|b,f| b << nil}
+    end
   end
   
   def update(name, x, y, f)
@@ -16,6 +20,7 @@ class Tabletop
     toy_robot.x = x
     toy_robot.y = y
     toy_robot.f = f
+    
   end
   
   def valid_location?(x, y)
@@ -31,3 +36,5 @@ class Tabletop
   end
   
 end
+
+[[nil, tr, nil], []]

@@ -70,8 +70,15 @@ class ToyRobot
   
   def initialize(instruction_set = BasicInstructionSet, name = nil)
     self.class.send(:include, instruction_set)
-    @name = ''
-    (rand(8) + 1).times{@name << ('a'..'z').to_a[rand(26)]}
+    @name = (
+      if name
+        name
+      else
+        name = ''
+        (rand(8) + 1).times{name << ('a'..'z').to_a[rand(26)]}
+        name
+      end
+    )
     @x = 0
     @y = 0
     @f = 'NORTH'
@@ -89,12 +96,14 @@ class ToyRobot
   
   def tick
     current_command = command_list.pop
-    if unary?
-      self.send(current_command.downcase)
-    else
-      place, arguments = current_command.split
-      x, y, f = arguments.split(',')
-      self.send(place.downcase, x, y, f)
+    if current_command
+      if unary?(s)
+        self.send(current_command.downcase)
+      else
+        place, arguments = current_command.split
+        x, y, f = arguments.split(',')
+        self.send(place.downcase, x, y, f)
+      end
     end
   end
   
