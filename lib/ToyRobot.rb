@@ -1,12 +1,12 @@
 # ToyRobot
 
 # 20120401
-# 0.6.0
+# 0.7.0
 
-# Changes since 0.5: 
-# 0. None---version number bump.  
+# Changes since 0.6: 
+# 1. Changed the require of the string instance methods to the new namespace.  
 
-require_relative './String'
+require_relative './Thoran/String/InstanceMethods'
 require_relative './ToyRobot/BasicInstructionSet'
 require_relative './ToyRobot/Randomness'
 require 'observer'

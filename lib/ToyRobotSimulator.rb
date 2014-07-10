@@ -1,13 +1,14 @@
 # ToyRobotSimulator
 
 # 20120401
-# 0.6.0
+# 0.7.0
 
-# Changes since 0.5: 
-# 0. None--version number bump.  
+# Changes since 0.6: 
+# 1. Changed the require of the array instance methods to the new namespace.  
+# 2. Changed the require of the file class method to the new namespace.  
 
-require_relative './Array'
-require_relative './File'
+require_relative './Thoran/Array/InstanceMethods'
+require_relative './Thoran/File/ClassMethods'
 require_relative './ToyRobot'
 require_relative './Tabletop'
 
@@ -21,14 +22,17 @@ class ToyRobotSimulator
   
   class << self
     
-    def run
-      defaults = {
-        :programs_directory => '../programs',
+    def defaults
+      @defaults ||= {
+        :programs_directory => File.join(File.dirname(__FILE__), '../programs'),
         :tabletop_dimensions => '5x5',
         :number_of_toy_robots => 1,
         :extras => false
       }
-      ToyRobotSimulator.new(defaults).run
+    end
+    
+    def run
+      ToyRobotSimulator.new(@defaults).run
     end
     
   end
@@ -41,6 +45,13 @@ class ToyRobotSimulator
     self.number_of_toy_robots = options[:number_of_toy_robots] if options[:number_of_toy_robots]
     self.extras = options[:extras] if options[:extras]
     self.random = options[:random] if options[:random]
+    set_defaults
+  end
+  
+  def set_defaults
+    self.programs_directory = ToyRobotSimulator.defaults[:programs_directory] unless @programs_directory
+    init_tabletop(ToyRobotSimulator.defaults[:tabletop_dimensions]) unless @tabletop
+    init_toy_robots(ToyRobotSimulator.defaults[:number_of_toy_robots]) unless @toy_robots
   end
   
   def run

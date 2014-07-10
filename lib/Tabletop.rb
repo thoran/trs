@@ -1,14 +1,12 @@
 # Tabletop
 
 # 20120401
-# 0.6.0
+# 0.7.0
 
-# Changes since 0.5: 
-# 1. Made init_grid() private.  
-# 2. + [](), so as I don't have to make use of the grid accessor in order to retrieve a co-ordinate.  
-# 3. + []=(), so as I don't have to make use of the grid accessor in order to retrieve a co-ordinate.  
+# Changes since 0.6: 
+# 1. 
 
-require_relative './String'
+require_relative './Thoran/String/InstanceMethods'
 
 class Tabletop
   

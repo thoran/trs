@@ -2,10 +2,12 @@
 # trs
 
 # 20120401
-# 0.6.0
+# 0.7.0
 
-# Changes since 0.5: 
-# 0. None---version number bump.  
+# Changes since 0.6: 
+# 1. Removed setting of defaults for programs_directory, since this is now done in ToyRobotSimulator::defaults.  
+# 2. Removed setting of defaults for tabletop_dimensions, since this is now done in ToyRobotSimulator::defaults.  
+# 3. Removed setting of defaults for number_of_toy_robots, since this is now done in ToyRobotSimulator::defaults.  
 
 require_relative '../lib/Switches'
 require_relative '../lib/ToyRobotSimulator'
@@ -25,8 +27,8 @@ trs = ToyRobotSimulator.new
 trs.random = switches.random
 trs.extras = switches.extras? || false
 trs.program = switches.program if switches.program
-trs.programs_directory = switches.programs_directory || File.join(File.dirname(__FILE__), '../programs')
-trs.tabletop_dimensions = switches.tabletop_dimensions || '5x5'
-trs.number_of_toy_robots = switches.number_of_toy_robots || 1
+trs.programs_directory = switches.programs_directory
+trs.tabletop_dimensions = switches.tabletop_dimensions
+trs.number_of_toy_robots = switches.number_of_toy_robots
 trs.random = switches.random
 trs.run

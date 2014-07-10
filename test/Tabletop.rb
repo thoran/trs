@@ -1,9 +1,10 @@
 # trs/test/Tabletop
 
 # 20120401
-# 0.6.0
+# 0.7.0
 
 require_relative '../lib/Tabletop'
+gem 'minitest', '~> 2'
 require 'minitest/autorun'
 
 describe Tabletop do
@@ -49,36 +50,40 @@ describe Tabletop do
   
   describe 'getting a value in the grid' do
     
+    before do
+      @tabletop = Tabletop.new('5x5')
+    end
+    
     it 'must be able to done via the grid method' do
-      tabletop = Tabletop.new('5x5')
-      tabletop.grid[0][0].must_equal nil
-      tabletop.grid[0][0] = 'toy_robot'
-      tabletop.grid[0][0].must_equal 'toy_robot'
+      @tabletop.grid[0][0].must_equal nil
+      @tabletop.grid[0][0] = 'toy_robot'
+      @tabletop.grid[0][0].must_equal 'toy_robot'
     end
     
     it 'must be able to done via the bracket method' do
-      tabletop = Tabletop.new('5x5')
-      tabletop[0,0].must_equal nil
-      tabletop.grid[0][0] = 'toy_robot'
-      tabletop[0,0].must_equal 'toy_robot'
+      @tabletop[0,0].must_equal nil
+      @tabletop.grid[0][0] = 'toy_robot'
+      @tabletop[0,0].must_equal 'toy_robot'
     end
     
   end
   
   describe 'setting a value in the grid' do
     
+    before do
+      @tabletop = Tabletop.new('5x5')
+    end
+    
     it 'must be able to done via the grid method' do
-      tabletop = Tabletop.new('5x5')
-      tabletop.grid[0][0].must_equal nil
-      tabletop.grid[0][0] = 'toy_robot'
-      tabletop.grid[0][0].must_equal 'toy_robot'
+      @tabletop.grid[0][0].must_equal nil
+      @tabletop.grid[0][0] = 'toy_robot'
+      @tabletop.grid[0][0].must_equal 'toy_robot'
     end
     
     it 'must be able to done via the bracket method' do
-      tabletop = Tabletop.new('5x5')
-      tabletop[0,0].must_equal nil
-      tabletop[0,0] = 'toy_robot'
-      tabletop[0,0].must_equal 'toy_robot'
+      @tabletop[0,0].must_equal nil
+      @tabletop[0,0] = 'toy_robot'
+      @tabletop[0,0].must_equal 'toy_robot'
     end
     
   end
