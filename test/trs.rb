@@ -1,4 +1,4 @@
-describe Tabletop do
+describe ToyRobotSimulator do
   
   describe 'initialization' do
     it 'should return a ToyRobot object' do
