@@ -1,7 +1,4 @@
-# trs/test/all
-
-# 20121009
-# 0.8.0
+# trs/test/all.rb
 
 require_relative './Tabletop'
 require_relative './ToyRobot'

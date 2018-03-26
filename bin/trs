@@ -1,10 +1,8 @@
 #!/usr/bin/env ruby
 # trs
 
-# 20121009
-# 0.8.0
-
-# Changes since 0.6: 
+# 20150704
+# 0.8.1
 
 require_relative '../lib/Switches'
 require_relative '../lib/ToyRobotSimulator'
@@ -16,8 +14,11 @@ switches = Switches.new do |s|
 end
 
 trs = ToyRobotSimulator.new
-trs.program_name = switches.program_name if switches.program_name
-trs.programs_directory = switches.programs_directory if switches.programs_directory
-trs.tabletop_dimensions = switches.tabletop_dimensions if switches.tabletop_dimensions
+
+[:program_name, :programs_directory, :tabletop_dimensions].each do |switch|
+  switch_value = switches.send(switch)
+  trs.send(switch.to_s + '=', switch_value) if switch_value
+end
+
 trs.setup
 trs.run

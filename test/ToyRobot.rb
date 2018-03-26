@@ -1,7 +1,4 @@
-# trs/test/ToyRobot
-
-# 20121009
-# 0.8.0
+# trs/test/ToyRobot.rb
 
 require_relative '../lib/ToyRobot'
 gem 'minitest', '~> 2'

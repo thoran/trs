@@ -1,7 +1,5 @@
+# ToyRobot.rb
 # ToyRobot
-
-# 20121009
-# 0.8.0
 
 require_relative './ToyRobot/BasicInstructionSet'
 require 'observer'

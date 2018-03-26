@@ -1,7 +1,5 @@
+# Tabletop.rb
 # Tabletop
-
-# 20121009
-# 0.8.0
 
 class Tabletop
   

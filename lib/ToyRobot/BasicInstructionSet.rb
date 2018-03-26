@@ -1,7 +1,5 @@
+# ToyRobot/BasicInstructionSet.rb
 # ToyRobot::BasicInstructionSet
-
-# 20121009
-# 0.8.0
 
 class ToyRobot
   module BasicInstructionSet
