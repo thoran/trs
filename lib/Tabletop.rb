@@ -1,10 +1,5 @@
+# Tabletop.rb
 # Tabletop
-
-# 20120401
-# 0.7.0
-
-# Changes since 0.6: 
-# 1. 
 
 require_relative './Thoran/String/InstanceMethods'
 

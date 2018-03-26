@@ -1,10 +1,5 @@
+# ToyRobot/Randomness.rb
 # ToyRobot::Randomness
-
-# 20120401
-# 0.7.0
-
-# Changes since 0.6: 
-# 0. None---version number bump.  
 
 class ToyRobot
   module Randomness

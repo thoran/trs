@@ -1,10 +1,5 @@
+# ToyRobot.rb
 # ToyRobot
-
-# 20120401
-# 0.7.0
-
-# Changes since 0.6: 
-# 1. Changed the require of the string instance methods to the new namespace.  
 
 require_relative './Thoran/String/InstanceMethods'
 require_relative './ToyRobot/BasicInstructionSet'

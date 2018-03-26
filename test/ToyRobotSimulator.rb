@@ -1,10 +1,4 @@
-# trs/test/ToyRobot
-
-# 20120401
-# 0.7.0
-
-# Changes since 0.6: 
-# 1. 
+# trs/test/ToyRobot.rb
 
 require_relative '../lib/ToyRobotSimulator'
 gem 'minitest', '~> 2'

@@ -1,11 +1,5 @@
+# ToyRobotSimulator.rb
 # ToyRobotSimulator
-
-# 20120401
-# 0.7.0
-
-# Changes since 0.6: 
-# 1. Changed the require of the array instance methods to the new namespace.  
-# 2. Changed the require of the file class method to the new namespace.  
 
 require_relative './Thoran/Array/InstanceMethods'
 require_relative './Thoran/File/ClassMethods'
