@@ -1,7 +1,6 @@
 # trs/test/Tabletop.rb
 
 require_relative '../lib/Tabletop'
-gem 'minitest', '~> 2'
 require 'minitest/autorun'
 
 describe Tabletop do
@@ -52,13 +51,13 @@ describe Tabletop do
     end
 
     it 'must be able to done via the grid method' do
-      @tabletop.grid[0][0].must_equal nil
+      assert_nil(@tabletop.grid[0][0])
       @tabletop.grid[0][0] = 'toy_robot'
       @tabletop.grid[0][0].must_equal 'toy_robot'
     end
 
     it 'must be able to done via the bracket method' do
-      @tabletop[0,0].must_equal nil
+      assert_nil(@tabletop[0,0])
       @tabletop.grid[0][0] = 'toy_robot'
       @tabletop[0,0].must_equal 'toy_robot'
     end
@@ -72,13 +71,13 @@ describe Tabletop do
     end
 
     it 'must be able to done via the grid method' do
-      @tabletop.grid[0][0].must_equal nil
+      assert_nil(@tabletop.grid[0][0])
       @tabletop.grid[0][0] = 'toy_robot'
       @tabletop.grid[0][0].must_equal 'toy_robot'
     end
 
     it 'must be able to done via the bracket method' do
-      @tabletop[0,0].must_equal nil
+      assert_nil(@tabletop[0,0])
       @tabletop[0,0] = 'toy_robot'
       @tabletop[0,0].must_equal 'toy_robot'
     end

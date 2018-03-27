@@ -2,9 +2,9 @@
 # trs
 
 # 20180327
-# 0.8.3 (bells_and_whistles)
+# 0.8.4 (bells_and_whistles)
 
-# Note: This branch was created by cherry picking the changes on master which caused the version to move from 0.8.0 to 0.8.1 onto master at 0.7.0 to create the bells_and_whistles branch.
+# Note: This branch was initially created by cherry picking the changes on master which caused the version to move from 0.8.0 to 0.8.1 onto master at 0.7.0, which had multiple toy robots, randomized command lists, and visual table output) to create the bells_and_whistles branch.
 
 # Changes since 0.6:
 # 1. Removed setting of defaults for programs_directory, since this is now done in ToyRobotSimulator::defaults.
@@ -26,15 +26,24 @@
 # 14. ~ ToyRobotSimulator#run, so that it can accept arguments and not just the defaults.
 # 15. Simplified calling the simulator in bin/trs.
 # 16. Removed trailing spaces.
+# 3/4
+# 17. Cleaned up the randomizing of command lists, clarifying that with changed language to become max_ticks().
+# 18. More clearly allowed for the idea of selecting an instruction set.
+# 19. Allowed the setting of both max_ticks and instruction_set.
+# 20. Cleaned up and made work the assigning of defaults for the ToyRobotSimulator class.
+# 21. Reworked the tests so that they pass with the changes made in the previous few commits.
+# 22. + Gemfile
+# 23. Removed gem command from test files.
 
 require_relative '../lib/Switches'
 require_relative '../lib/ToyRobotSimulator'
 
 switches = Switches.new do |s|
+  s.set(:i, :instruction_set) # What instruction set (the list of possible commands as a Ruby class name) should be used?
+  s.set(:m, :max_ticks) # How many ticks should this run for?
   s.set(:n, :number_of_toy_robots) # The number of toy robots to be run simultaneously.
   s.set(:p, :program) # The name of the program to run as it is in the filesystem.
   s.set(:d, :directory, :programs_directory) # The directory where programs can be found.
-  s.set(:r, :random) # Should the robots move randomly?
   s.set(:t, :tabletop, :tabletop_dimensions) # The dimensions of the tabletop.
 end
 

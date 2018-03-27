@@ -1,7 +1,6 @@
 # trs/test/ToyRobot.rb
 
 require_relative '../lib/ToyRobot'
-gem 'minitest', '~> 2'
 require 'minitest/autorun'
 
 describe ToyRobot do

@@ -1,13 +1,13 @@
-# ToyRobot/Randomness.rb
-# ToyRobot::Randomness
+# ToyRobot/CommandListRandomizer.rb
+# ToyRobot::CommandListRandomizer
 
 class ToyRobot
-  module Randomness
+  module CommandListRandomizer
 
     def init_command_list
       @command_list = (
         command_list = []
-        random.times do
+        @max_ticks.times do
           command_list << random_command
         end
         command_list

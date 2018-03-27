@@ -3,7 +3,7 @@
 
 require_relative './Thoran/String/InstanceMethods'
 require_relative './ToyRobot/BasicInstructionSet'
-require_relative './ToyRobot/Randomness'
+require_relative './ToyRobot/CommandListRandomizer'
 require 'observer'
 
 class ToyRobot
@@ -11,35 +11,31 @@ class ToyRobot
   include Observable
 
   attr_accessor :command_list
+  attr_accessor :instruction_set
   attr_accessor :name
   attr_accessor :tabletop
+  attr_accessor :max_ticks
   attr_accessor :old_x, :old_y, :old_f
   attr_accessor :x, :y, :f
-  attr_reader :random
 
-  def initialize(tabletop = nil, instruction_set = BasicInstructionSet, name = nil)
-    @tabletop = tabletop
+  def initialize(command_list: nil, instruction_set: BasicInstructionSet, max_ticks: nil, name: nil, tabletop: nil)
+    self.command_list = command_list
     self.class.send(:include, instruction_set)
+    @max_ticks = max_ticks
     init_name(name)
+    @tabletop = tabletop
     @old_x = nil
     @old_y = nil
     @old_f = nil
     @x = nil
     @y = nil
     @f = nil
-    @random = false
   end
 
   def load(program)
     if program
       @command_list = program.split("\n")
     end
-  end
-
-  def random=(random)
-    @random = random
-    ToyRobot.send(:include, Randomness)
-    init_command_list
   end
 
   def tick

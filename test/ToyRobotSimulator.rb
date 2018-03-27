@@ -1,55 +1,67 @@
 # trs/test/ToyRobot.rb
 
 require_relative '../lib/ToyRobotSimulator'
-gem 'minitest', '~> 2'
 require 'minitest/autorun'
 
 describe ToyRobotSimulator do
 
   describe 'initialization' do
-
-    it 'must return a ToyRobotSimulator object' do
+    it 'must return an instance of ToyRobotSimulator' do
       ToyRobotSimulator.new.class.must_equal ToyRobotSimulator
     end
 
     it 'must set the tabletop dimensions via the constructor' do
       trs = ToyRobotSimulator.new(tabletop_dimensions: '4x5')
-      trs.instance_variable_get(:@tabletop_dimensions).must_equal '4x5'
+      trs.tabletop_dimensions.must_equal '4x5'
+    end
+
+    it 'must assign a default of 1 to @number_of_toy_robots' do
+      trs = ToyRobotSimulator.new
+      trs.number_of_toy_robots.must_equal 1
+    end
+
+    it 'must assign the supplied value for @number_of_toy_robots' do
+      trs = ToyRobotSimulator.new(number_of_toy_robots: 2)
+      trs.number_of_toy_robots.must_equal 2
+    end
+  end
+
+  describe "#setup" do
+    before do
+      @trs = ToyRobotSimulator.new
+      @trs.setup
     end
 
     it 'must initialize a default tabletop' do
-      trs = ToyRobotSimulator.new
-      trs.tabletop.wont_equal nil
+      @trs.tabletop.wont_equal nil
     end
 
-    it 'must initialize a default toy robot' do
-      trs = ToyRobotSimulator.new
-      trs.send(:toy_robots).wont_equal nil
+    it 'must initialize a collection of toy robots' do
+      @trs.send(:toy_robots).each do |toy_robot|
+        toy_robot.class.must_equal(ToyRobot)
+      end
     end
 
+    it 'must initialize a tabletop' do
+      trs = ToyRobotSimulator.new
+      trs.setup
+      trs.tabletop.class.must_equal Tabletop
+    end
   end
 
-  describe 'setting attributes' do
-
-    it 'will initialize the tabletop upon setting the tabletop dimensions' do
-      trs = ToyRobotSimulator.new(tabletop_dimensions: '4x5')
-      trs.instance_variable_get(:@tabletop).class.must_equal Tabletop
-    end
-
+  describe "#tabletop" do
     it 'must be able to set the tabletop attribute directly' do
       trs = ToyRobotSimulator.new
       trs.tabletop = Tabletop.new(4,5)
-      trs.instance_variable_get(:@tabletop).class.must_equal Tabletop
+      trs.tabletop.class.must_equal Tabletop
     end
-
   end
 
   describe 'executing a command' do
 
     before do
       @trs = ToyRobotSimulator.new
-      @tabletop = Tabletop.new('5x5')
-      @trs.tabletop = @tabletop
+      @trs.setup
       @toy_robot = @trs.send(:toy_robots).first
     end
 
@@ -63,21 +75,21 @@ describe ToyRobotSimulator do
     it 'must be able to be place a robot on the tabletop' do
       command = 'PLACE 0,0,NORTH'
       @toy_robot.load(command)
-      @tabletop[0,0].must_equal nil
+      assert_nil(@trs.tabletop[0,0])
       @trs.run
-      @tabletop[0,0].must_equal @toy_robot
+      @trs.tabletop[0,0].must_equal @toy_robot
     end
 
     it 'must ignore any commands unless a place command has the toy robot on the tabletop' do
       command = 'LEFT'
       @toy_robot.load(command)
-      @toy_robot.instance_variable_get(:@x).must_equal nil
-      @toy_robot.instance_variable_get(:@y).must_equal nil
-      @toy_robot.instance_variable_get(:@f).must_equal nil
+      assert_nil(@toy_robot.instance_variable_get(:@x))
+      assert_nil(@toy_robot.instance_variable_get(:@y))
+      assert_nil(@toy_robot.instance_variable_get(:@f))
       @trs.run
-      @toy_robot.instance_variable_get(:@x).must_equal nil
-      @toy_robot.instance_variable_get(:@y).must_equal nil
-      @toy_robot.instance_variable_get(:@f).must_equal nil
+      assert_nil(@toy_robot.instance_variable_get(:@x))
+      assert_nil(@toy_robot.instance_variable_get(:@y))
+      assert_nil(@toy_robot.instance_variable_get(:@f))
     end
 
     it 'must be able to turn left' do
