@@ -58,7 +58,6 @@ describe ToyRobotSimulator do
   end
 
   describe 'executing a command' do
-
     before do
       @trs = ToyRobotSimulator.new
       @trs.setup

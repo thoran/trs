@@ -63,19 +63,19 @@ class ToyRobotSimulator
   def run
     tick_count = -1
     puts "TICK: #{tick_count += 1}."
-    tabletop.draw
-    until toy_robots.expired? || tick_count_exceeded?(tick_count)
+    @tabletop.draw
+    until @toy_robots.expired? || tick_count_exceeded?(tick_count)
       puts "TICK: #{tick_count += 1}."
-      toy_robots.each do |toy_robot|
+      @toy_robots.each do |toy_robot|
         toy_robot.tick unless toy_robot.expired?
       end
-      tabletop.draw
+      @tabletop.draw
     end
-    toy_robots.each{|toy_robot| toy_robot.report}
+    @toy_robots.each{|toy_robot| toy_robot.report}
   end
 
   def update(toy_robot)
-    tabletop.update(toy_robot)
+    @tabletop.update(toy_robot)
   end
 
   private
