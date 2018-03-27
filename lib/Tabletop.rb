@@ -5,7 +5,9 @@ require_relative './Thoran/String/InstanceMethods'
 
 class Tabletop
   
-  attr_accessor :x_dimension, :y_dimension, :grid, :extras
+  attr_accessor :grid
+  attr_accessor :x_dimension
+  attr_accessor :y_dimension
   
   def initialize(x_dimension, y_dimension = nil)
     if y_dimension.nil?
@@ -13,7 +15,6 @@ class Tabletop
     end
     @x_dimension = x_dimension.to_i
     @y_dimension = y_dimension.to_i
-    @extras = false
     init_grid
   end
   
@@ -31,11 +32,7 @@ class Tabletop
   end
   
   def valid_location?(x,y)
-    if extras
-      x.to_i.between?(0, x_dimension - 1) && y.to_i.between?(0, y_dimension - 1) && grid[x][y].nil? ? true : false
-    else
-      x.to_i.between?(0, x_dimension - 1) && y.to_i.between?(0, y_dimension - 1) ? true : false
-    end
+    x.to_i.between?(0, x_dimension - 1) && y.to_i.between?(0, y_dimension - 1) && grid[x][y].nil? ? true : false
   end
   
   def draw

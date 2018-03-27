@@ -9,22 +9,24 @@ require 'observer'
 class ToyRobot
   
   include Observable
-  
-  attr_accessor :tabletop, :name, :x, :y, :f, :old_x, :old_y, :old_f, :extras
+
+  attr_accessor :command_list
+  attr_accessor :name  
+  attr_accessor :tabletop
+  attr_accessor :old_x, :old_y, :old_f
+  attr_accessor :x, :y, :f
   attr_reader :random
-  attr_writer :command_list
   
   def initialize(tabletop = nil, instruction_set = BasicInstructionSet, name = nil)
     @tabletop = tabletop
     self.class.send(:include, instruction_set)
     init_name(name)
-    @x = nil
-    @y = nil
-    @f = nil
     @old_x = nil
     @old_y = nil
     @old_f = nil
-    @extras = false
+    @x = nil
+    @y = nil
+    @f = nil
     @random = false
   end
   
@@ -35,24 +37,15 @@ class ToyRobot
   end
   
   def random=(random)
-    if random
-      @random = random
-      ToyRobot.send(:include, Randomness)
-      init_command_list
-    end
+    @random = random
+    ToyRobot.send(:include, Randomness)
+    init_command_list
   end
-  
-  # Only to be used if there is one robot, or if the robots are to be run sequentially.  
-  def run
-    until expired? do
-      toy_robot.tick
-    end
-  end
-  
+    
   def tick
-    if current_command = command_list.shift
-      puts "#{name}'s pending command list: #{command_list.inject([]){|a,e| a << e.wrap('"')}.join(', ')}" if extras
-      puts "#{name}'s next command is #{current_command}" if extras
+    if current_command = @command_list.shift
+      puts "#{name}'s pending command list: #{@command_list.inject([]){|a,e| a << e.wrap('"')}.join(', ')}"
+      puts "#{name}'s next command is #{current_command}"
       if unary_instruction?(current_command)
         if placed?
           self.send(current_command.downcase)
@@ -63,11 +56,11 @@ class ToyRobot
         self.send(command.downcase, x.to_i, y.to_i, f)
       end
     end
-    report if extras && !expired?
+    report if !expired?
   end
   
   def expired?
-    command_list.empty?
+    @command_list.empty?
   end
   
   def placed?
@@ -87,11 +80,7 @@ class ToyRobot
       end
     )
   end
-  
-  def command_list
-    @command_list
-  end
-  
+    
   def valid_move?
     if placed?
       case self.f

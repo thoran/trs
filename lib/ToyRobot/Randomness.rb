@@ -12,7 +12,6 @@ class ToyRobot
         end
         command_list
       )
-      p @command_list if extras
     end
     
     def random_command
