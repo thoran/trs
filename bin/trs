@@ -2,7 +2,7 @@
 # trs
 
 # 20180327
-# 0.8.2
+# 0.8.3
 
 # Changes since 0.7:
 # 1. Removed the concept of having multiple robots and other extras (mainly outputting of the tabletop)
@@ -14,6 +14,10 @@
 # 5. Reworked ToyRobotSimulator significantly to remove a lot of unnecessary handling of instance values and to harmonize with the bells_and_whistles branch.
 # 6. Ruby 2+ only now that it has been dehashrocketified.
 # 7. General tidying and harmonizing between the master and bells_and_whistles branches.
+# 2/3
+# 8. ~ ToyRobotSimulator#run, so that it can accept arguments and not just the defaults.
+# 9. Simplified calling the simulator in bin/trs.
+# 10. Removed trailing spaces.
 
 require_relative '../lib/Switches'
 require_relative '../lib/ToyRobotSimulator'
@@ -24,12 +28,4 @@ switches = Switches.new do |s|
   s.set(:t, :tabletop, :tabletop_dimensions) # The dimensions of the tabletop.
 end
 
-toy_robot_simulator = ToyRobotSimulator.new
-
-[:program, :programs_directory, :tabletop_dimensions].each do |switch|
-  switch_value = switches.send(switch)
-  toy_robot_simulator.send(switch.to_s + '=', switch_value) if switch_value
-end
-
-toy_robot_simulator.setup
-toy_robot_simulator.run
+ToyRobotSimulator.run(switches.to_h)
