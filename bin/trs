@@ -1,24 +1,35 @@
 #!/usr/bin/env ruby
 # trs
 
-# 20150704
-# 0.8.1
+# 20180327
+# 0.8.2
+
+# Changes since 0.7:
+# 1. Removed the concept of having multiple robots and other extras (mainly outputting of the tabletop)
+# 0/1
+# 2. Moved date and version information out of individual files to bin/trs only.
+# 3. Made the handling of switches in bin/trs slightly DRYer(sic).
+# 1/2
+# 4. - ToyRobot#run, since it wasn't working, but also because it lacks robustness to have a robot run itself successfully only somemtimes depending on context, and even though it could be easily fixed.
+# 5. Reworked ToyRobotSimulator significantly to remove a lot of unnecessary handling of instance values and to harmonize with the bells_and_whistles branch.
+# 6. Ruby 2+ only now that it has been dehashrocketified.
+# 7. General tidying and harmonizing between the master and bells_and_whistles branches.
 
 require_relative '../lib/Switches'
 require_relative '../lib/ToyRobotSimulator'
 
 switches = Switches.new do |s|
-  s.set(:p, :program_name)
-  s.set(:d, :directory, :programs_directory)
-  s.set(:t, :tabletop, :tabletop_dimensions)
+  s.set(:p, :program) # The name of the program to run as it is in the filesystem.
+  s.set(:d, :directory, :programs_directory) # The directory where programs can be found.
+  s.set(:t, :tabletop, :tabletop_dimensions) # The dimensions of the tabletop.
 end
 
-trs = ToyRobotSimulator.new
+toy_robot_simulator = ToyRobotSimulator.new
 
-[:program_name, :programs_directory, :tabletop_dimensions].each do |switch|
+[:program, :programs_directory, :tabletop_dimensions].each do |switch|
   switch_value = switches.send(switch)
-  trs.send(switch.to_s + '=', switch_value) if switch_value
+  toy_robot_simulator.send(switch.to_s + '=', switch_value) if switch_value
 end
 
-trs.setup
-trs.run
+toy_robot_simulator.setup
+toy_robot_simulator.run

@@ -13,7 +13,7 @@ describe ToyRobotSimulator do
     end
     
     it 'must set the tabletop dimensions via the constructor' do
-      trs = ToyRobotSimulator.new(:tabletop_dimensions => '4x5')
+      trs = ToyRobotSimulator.new(tabletop_dimensions: '4x5')
       trs.instance_variable_get(:@tabletop_dimensions).must_equal '4x5'
     end
     

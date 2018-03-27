@@ -7,19 +7,21 @@ require 'observer'
 class ToyRobot
   
   include Observable
-  
-  attr_accessor :tabletop, :x, :y, :f, :old_x, :old_y, :old_f
-  attr_writer :command_list
+
+  attr_accessor :command_list
+  attr_accessor :tabletop
+  attr_accessor :old_x, :old_y, :old_f
+  attr_accessor :x, :y, :f
   
   def initialize(tabletop = nil, instruction_set = BasicInstructionSet)
     @tabletop = tabletop
     self.class.send(:include, instruction_set)
-    @x = nil
-    @y = nil
-    @f = nil
     @old_x = nil
     @old_y = nil
     @old_f = nil
+    @x = nil
+    @y = nil
+    @f = nil
   end
   
   def load(program)
@@ -29,7 +31,7 @@ class ToyRobot
   end
   
   def tick
-    if current_command = command_list.shift
+    if current_command = @command_list.shift
       if unary_instruction?(current_command)
         if placed?
           self.send(current_command.downcase)
@@ -43,7 +45,7 @@ class ToyRobot
   end
   
   def expired?
-    command_list.empty?
+    @command_list.empty?
   end
   
   def placed?
@@ -51,11 +53,7 @@ class ToyRobot
   end
   
   private
-  
-  def command_list
-    @command_list
-  end
-  
+    
   def valid_move?
     if placed?
       case self.f

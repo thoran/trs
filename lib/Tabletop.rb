@@ -3,7 +3,9 @@
 
 class Tabletop
   
-  attr_accessor :x_dimension, :y_dimension, :grid
+  attr_accessor :grid
+  attr_accessor :x_dimension
+  attr_accessor :y_dimension
   
   def initialize(x_dimension, y_dimension = nil)
     if y_dimension.nil?

@@ -8,36 +8,41 @@ class ProgramNotFoundError < RuntimeError; end
 
 class ToyRobotSimulator
   
-  attr_accessor :program_name
+  attr_accessor :program
   attr_accessor :programs_directory
   attr_accessor :tabletop
   attr_accessor :tabletop_dimensions
-  attr_accessor :toy_robot
   
   class << self
     
     def defaults
       @defaults ||= {
-        :programs_directory => File.join(File.dirname(__FILE__), '../programs'),
-        :tabletop_dimensions => '5x5'
+        programs_directory: File.join(File.dirname(__FILE__), '../programs'),
+        tabletop_dimensions: '5x5',
       }
     end
     
     def run
-      ToyRobotSimulator.new(@defaults).run
+      ToyRobotSimulator.new(defaults).run
     end
     
   end # class << self
   
   def initialize(*args)
     options = args.last.is_a?(::Hash) ? args.pop : {}
-    @program_name = options[:program_name] if options[:program_name]
-    @programs_directory = options[:programs_directory] || ToyRobotSimulator.defaults[:programs_directory]
-    @tabletop_dimensions = options[:tabletop_dimensions] || ToyRobotSimulator.defaults[:tabletop_dimensions]
+    @program = options[:program]
+    @programs_directory = options[:programs_directory]
+    @tabletop_dimensions = options[:tabletop_dimensions]
+    set_defaults
   end
   
+  def set_defaults
+    @programs_directory = ToyRobotSimulator.defaults[:programs_directory] unless @programs_directory
+    @tabletop_dimensions = ToyRobotSimulator.defaults[:tabletop_dimensions] unless @tabletop_dimensions
+  end
+
   def setup
-    init_tabletop(tabletop_dimensions)
+    init_tabletop
     init_toy_robot
   end
   
@@ -45,6 +50,7 @@ class ToyRobotSimulator
     until @toy_robot.expired?
       @toy_robot.tick
     end
+    @toy_robot.report
   end
   
   def update(toy_robot)
@@ -53,24 +59,23 @@ class ToyRobotSimulator
   
   private
   
-  def init_tabletop(tabletop_dimensions = nil)
-    tabletop_dimensions = (tabletop_dimensions ? tabletop_dimensions : self.tabletop_dimensions)
-    @tabletop = Tabletop.new(tabletop_dimensions)
+  def init_tabletop
+    @tabletop = Tabletop.new(@tabletop_dimensions)
   end
   
   def init_toy_robot
     @toy_robot = ToyRobot.new
-    @toy_robot.tabletop = tabletop
-    @toy_robot.load(program)
+    @toy_robot.tabletop = @tabletop
+    @toy_robot.load(@program)
     @toy_robot.add_observer(self)
   end
   
   def program
-    if @program_name
+    if @program
       begin
-        if program_name = File.basename(@program_name, '.program')
-          if File.exist?(File.join(@programs_directory, program_name + '.program'))
-            File.read(File.join(@programs_directory, program_name + '.program'))
+        if program = File.basename(@program, '.program')
+          if File.exist?(File.join(@programs_directory, program + '.program'))
+            File.read(File.join(@programs_directory, program + '.program'))
           else
             raise ProgramNotFoundError
           end
@@ -78,7 +83,7 @@ class ToyRobotSimulator
           raise ProgramNotFoundError          
         end
       rescue ProgramNotFoundError => e
-        puts "Program '#{program_name}' not found."
+        puts "Program '#{program}' not found."
         exit
       end
     else
