@@ -7,16 +7,16 @@ require_relative './ToyRobot/Randomness'
 require 'observer'
 
 class ToyRobot
-  
+
   include Observable
 
   attr_accessor :command_list
-  attr_accessor :name  
+  attr_accessor :name
   attr_accessor :tabletop
   attr_accessor :old_x, :old_y, :old_f
   attr_accessor :x, :y, :f
   attr_reader :random
-  
+
   def initialize(tabletop = nil, instruction_set = BasicInstructionSet, name = nil)
     @tabletop = tabletop
     self.class.send(:include, instruction_set)
@@ -29,19 +29,19 @@ class ToyRobot
     @f = nil
     @random = false
   end
-  
+
   def load(program)
     if program
       @command_list = program.split("\n")
     end
   end
-  
+
   def random=(random)
     @random = random
     ToyRobot.send(:include, Randomness)
     init_command_list
   end
-    
+
   def tick
     if current_command = @command_list.shift
       puts "#{name}'s pending command list: #{@command_list.inject([]){|a,e| a << e.wrap('"')}.join(', ')}"
@@ -58,17 +58,17 @@ class ToyRobot
     end
     report if !expired?
   end
-  
+
   def expired?
     @command_list.empty?
   end
-  
+
   def placed?
     self.x && self.y && self.f ? true : false
   end
-  
+
   private
-  
+
   def init_name(name)
     @name = (
       if name
@@ -80,7 +80,7 @@ class ToyRobot
       end
     )
   end
-    
+
   def valid_move?
     if placed?
       case self.f
@@ -93,9 +93,9 @@ class ToyRobot
       false
     end
   end
-  
+
   def unary_instruction?(s)
     s =~ /PLACE/ ? false : true
   end
-  
+
 end

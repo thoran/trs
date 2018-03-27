@@ -2,7 +2,7 @@
 # trs
 
 # 20180327
-# 0.8.2-bells_and_whistles edition
+# 0.8.3 (bells_and_whistles)
 
 # Note: This branch was created by cherry picking the changes on master which caused the version to move from 0.8.0 to 0.8.1 onto master at 0.7.0 to create the bells_and_whistles branch.
 
@@ -17,11 +17,15 @@
 # 6. Removed the concept of extras since having a bells_and_whistles branch makes it less necessary and it simplifies things.
 # 7. - ToyRobot#run, since it wasn't working, but also because it lacks robustness to have a robot run itself successfully only somemtimes depending on context, and even though it could be easily fixed.
 # 8. Reworked ToyRobotSimulator significantly to remove a lot of unnecessary handling of instance values.
-# 9. Ruby 2+ only now that it has been dehashrocketified. 
+# 9. Ruby 2+ only now that it has been dehashrocketified.
 # 10. Removed the concept of a program and hence program_name and now just have program to mean program name such that it isn't possible to load a program directly into the class at present, but must rather be loaded from the filesystem; so that it is consistent with master in this respect for now at least.
 # 11. Deleted Thoran/File/ClassMethods, since no longer using File.path_without_basename.
 # 12. Altered much of the contents of Thoran/Array/InstanceMethods, since Array#all_but_last (so as to be consistent with master for now) and Array#extract_options! are no longer being used.
 # 13. General tidying and harmonizing between the master and bells_and_whistles branches.
+# 2/3 since 0.8.2:
+# 14. ~ ToyRobotSimulator#run, so that it can accept arguments and not just the defaults.
+# 15. Simplified calling the simulator in bin/trs.
+# 16. Removed trailing spaces.
 
 require_relative '../lib/Switches'
 require_relative '../lib/ToyRobotSimulator'
@@ -34,14 +38,4 @@ switches = Switches.new do |s|
   s.set(:t, :tabletop, :tabletop_dimensions) # The dimensions of the tabletop.
 end
 
-toy_robot_simulator = ToyRobotSimulator.new
-
-# The order of setting attributes on ToyRobotSimulator is significant, which probably shouldn't be the case.
-
-[:program, :programs_directory, :tabletop_dimensions, :number_of_toy_robots, :random].each do |switch|
-  switch_value = switches.send(switch)
-  toy_robot_simulator.send(switch.to_s + '=', switch_value) if switch_value
-end
-
-toy_robot_simulator.setup
-toy_robot_simulator.run
+ToyRobotSimulator.run(switches.to_h)

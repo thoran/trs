@@ -3,7 +3,7 @@
 
 class ToyRobot
   module BasicInstructionSet
-    
+
     def place(x, y, f)
       if tabletop.valid_location?(x,y)
         if placed?
@@ -16,7 +16,7 @@ class ToyRobot
         notify_observers(self)
       end
     end
-    
+
     def move
       if valid_move?
         self.old_x, self.old_y = self.x, self.y
@@ -30,7 +30,7 @@ class ToyRobot
         notify_observers(self)
       end
     end
-    
+
     def turn(direction)
       self.old_f = self.f
       case self.f
@@ -58,15 +58,15 @@ class ToyRobot
       changed
       notify_observers(self)
     end
-    
+
     def left
       turn(:left)
     end
-    
+
     def right
       turn(:right)
     end
-    
+
     def report
       unless x && y && f
         puts "-,-,-"
@@ -74,6 +74,6 @@ class ToyRobot
         puts "#{x},#{y},#{f}"
       end
     end
-    
+
   end
 end

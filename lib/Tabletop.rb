@@ -4,11 +4,11 @@
 require_relative './Thoran/String/InstanceMethods'
 
 class Tabletop
-  
+
   attr_accessor :grid
   attr_accessor :x_dimension
   attr_accessor :y_dimension
-  
+
   def initialize(x_dimension, y_dimension = nil)
     if y_dimension.nil?
       x_dimension, y_dimension = x_dimension.split('x')
@@ -17,24 +17,24 @@ class Tabletop
     @y_dimension = y_dimension.to_i
     init_grid
   end
-  
+
   def update(toy_robot)
     grid[toy_robot.old_x][toy_robot.old_y] = nil
     grid[toy_robot.x][toy_robot.y] = toy_robot
   end
-  
+
   def [](x,y)
     grid[x][y]
   end
-  
+
   def []=(x, y, toy_robot)
     grid[x][y] = toy_robot
   end
-  
+
   def valid_location?(x,y)
     x.to_i.between?(0, x_dimension - 1) && y.to_i.between?(0, y_dimension - 1) && grid[x][y].nil? ? true : false
   end
-  
+
   def draw
     (y_dimension - 1).downto(0) do |y|
       0.upto(x_dimension - 1) do |x|
@@ -47,14 +47,14 @@ class Tabletop
       puts
     end
   end
-  
+
   private
-  
+
   def init_grid
     @grid = []
     (0..x_dimension - 1).inject(@grid) do |a,e|
       a << (0..y_dimension - 1).inject([]){|b,f| b << nil}
     end
   end
-  
+
 end
