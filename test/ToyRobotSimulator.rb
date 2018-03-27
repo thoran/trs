@@ -1,13 +1,11 @@
 # trs/test/ToyRobot.rb
 
 require_relative '../lib/ToyRobotSimulator'
-gem 'minitest', '~> 2'
 require 'minitest/autorun'
 
 describe ToyRobotSimulator do
 
   describe 'initialization' do
-
     it 'must return a ToyRobotSimulator object' do
       ToyRobotSimulator.new.class.must_equal ToyRobotSimulator
     end
@@ -16,21 +14,17 @@ describe ToyRobotSimulator do
       trs = ToyRobotSimulator.new(tabletop_dimensions: '4x5')
       trs.instance_variable_get(:@tabletop_dimensions).must_equal '4x5'
     end
-
   end
 
   describe 'setting attributes' do
-
     it 'must be able to set the tabletop attribute directly' do
       trs = ToyRobotSimulator.new
       trs.tabletop = Tabletop.new(4,5)
       trs.instance_variable_get(:@tabletop).class.must_equal Tabletop
     end
-
   end
 
   describe 'executing a command' do
-
     before do
       @trs = ToyRobotSimulator.new
       @tabletop = Tabletop.new('5x5')
@@ -49,7 +43,7 @@ describe ToyRobotSimulator do
     it 'must be able to be place a robot on the tabletop' do
       command = 'PLACE 0,0,NORTH'
       @toy_robot.load(command)
-      @tabletop[0,0].must_equal nil
+      assert_nil(@tabletop[0,0])
       @trs.run
       @tabletop[0,0].must_equal @toy_robot
     end
@@ -57,13 +51,13 @@ describe ToyRobotSimulator do
     it 'must ignore any commands unless a place command has the toy robot on the tabletop' do
       command = 'LEFT'
       @toy_robot.load(command)
-      @toy_robot.instance_variable_get(:@x).must_equal nil
-      @toy_robot.instance_variable_get(:@y).must_equal nil
-      @toy_robot.instance_variable_get(:@f).must_equal nil
+      assert_nil(@toy_robot.instance_variable_get(:@x))
+      assert_nil(@toy_robot.instance_variable_get(:@y))
+      assert_nil(@toy_robot.instance_variable_get(:@f))
       @trs.run
-      @toy_robot.instance_variable_get(:@x).must_equal nil
-      @toy_robot.instance_variable_get(:@y).must_equal nil
-      @toy_robot.instance_variable_get(:@f).must_equal nil
+      assert_nil(@toy_robot.instance_variable_get(:@x))
+      assert_nil(@toy_robot.instance_variable_get(:@y))
+      assert_nil(@toy_robot.instance_variable_get(:@f))
     end
 
     it 'must be able to turn left' do

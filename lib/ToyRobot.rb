@@ -13,9 +13,10 @@ class ToyRobot
   attr_accessor :old_x, :old_y, :old_f
   attr_accessor :x, :y, :f
 
-  def initialize(tabletop = nil, instruction_set = BasicInstructionSet)
+  def initialize(command_list: nil, tabletop: nil)
+    self.command_list = command_list
+    self.class.send(:include, BasicInstructionSet)
     @tabletop = tabletop
-    self.class.send(:include, instruction_set)
     @old_x = nil
     @old_y = nil
     @old_f = nil

@@ -13,6 +13,9 @@ class ToyRobotSimulator
   attr_accessor :tabletop
   attr_accessor :tabletop_dimensions
 
+  attr_accessor :tabletop
+  attr_accessor :toy_robot
+
   class << self
 
     def defaults
@@ -30,15 +33,19 @@ class ToyRobotSimulator
 
   def initialize(*args)
     options = args.last.is_a?(::Hash) ? args.pop : {}
-    @program = options[:program]
-    @programs_directory = options[:programs_directory]
-    @tabletop_dimensions = options[:tabletop_dimensions]
+    assign_ivars(options)
     set_defaults
   end
 
+  def assign_ivars(options)
+    options.each do |k,v|
+      instance_variable_set("@#{k}", v)
+    end
+  end
+
   def set_defaults
-    @programs_directory = ToyRobotSimulator.defaults[:programs_directory] unless @programs_directory
-    @tabletop_dimensions = ToyRobotSimulator.defaults[:tabletop_dimensions] unless @tabletop_dimensions
+    @programs_directory ||= ToyRobotSimulator.defaults[:programs_directory]
+    @tabletop_dimensions ||= ToyRobotSimulator.defaults[:tabletop_dimensions]
   end
 
   def setup
@@ -54,7 +61,7 @@ class ToyRobotSimulator
   end
 
   def update(toy_robot)
-    tabletop.update(toy_robot)
+    @tabletop.update(toy_robot)
   end
 
   private

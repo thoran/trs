@@ -2,7 +2,7 @@
 # trs
 
 # 20180327
-# 0.8.3
+# 0.8.4
 
 # Changes since 0.7:
 # 1. Removed the concept of having multiple robots and other extras (mainly outputting of the tabletop)
@@ -18,6 +18,12 @@
 # 8. ~ ToyRobotSimulator#run, so that it can accept arguments and not just the defaults.
 # 9. Simplified calling the simulator in bin/trs.
 # 10. Removed trailing spaces.
+# 3/4
+# 11. Reduced the capacity to select an instruction set, since this is the basic version after all.
+# 12. Cleaned up and made work the assigning of defaults for the ToyRobotSimulator class.
+# 13. Reworked the tests so that they pass with the changes made in the previous few commits.
+# 14. + Gemfile
+# 15. Removed gem command from test files.
 
 require_relative '../lib/Switches'
 require_relative '../lib/ToyRobotSimulator'
