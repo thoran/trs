@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 # trs
 
-# 20180327
-# 0.8.4
+# 20180403
+# 0.8.5
 
 # Changes since 0.7:
 # 1. Removed the concept of having multiple robots and other extras (mainly outputting of the tabletop)
@@ -24,8 +24,10 @@
 # 13. Reworked the tests so that they pass with the changes made in the previous few commits.
 # 14. + Gemfile
 # 15. Removed gem command from test files.
+# 4/5
+# 16. Gemified Switches to switches.rb, so removed the file and included a line in the Gemfile.
 
-require_relative '../lib/Switches'
+require_relative 'switches'
 require_relative '../lib/ToyRobotSimulator'
 
 switches = Switches.new do |s|
