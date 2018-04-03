@@ -2,7 +2,7 @@
 # trs
 
 # 20180403
-# 0.8.5 (bells_and_whistles)
+# 0.8.6 (bells_and_whistles)
 
 # Note: This branch was initially created by cherry picking the changes on master which caused the version to move from 0.8.0 to 0.8.1 onto master at 0.7.0, which had multiple toy robots, randomized command lists, and visual table output) to create the bells_and_whistles branch.
 
@@ -38,6 +38,7 @@
 # 24. Gemified Switches to switches.rb, so removed the file and included a line in the Gemfile.
 # 5/6
 # 25. Fixed require of Switches.
+# 26. Fixed the version number.
 
 require 'switches'
 require_relative '../lib/ToyRobotSimulator'
