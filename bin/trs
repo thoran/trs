@@ -26,8 +26,10 @@
 # 15. Removed gem command from test files.
 # 4/5
 # 16. Gemified Switches to switches.rb, so removed the file and included a line in the Gemfile.
+# 5/6
+# 17. Fixed require of Switches.
 
-require_relative 'switches'
+require 'switches'
 require_relative '../lib/ToyRobotSimulator'
 
 switches = Switches.new do |s|
