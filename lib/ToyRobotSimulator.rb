@@ -10,7 +10,6 @@ class ToyRobotSimulator
 
   attr_accessor :program
   attr_accessor :programs_directory
-  attr_accessor :tabletop
   attr_accessor :tabletop_dimensions
 
   attr_accessor :tabletop
@@ -25,8 +24,10 @@ class ToyRobotSimulator
       }
     end
 
-    def run
-      ToyRobotSimulator.new(defaults).run
+    def run(*args)
+      toy_robot_simulator = ToyRobotSimulator.new(*args)
+      toy_robot_simulator.setup
+      toy_robot_simulator.run
     end
 
   end # class << self

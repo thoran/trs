@@ -1,34 +1,11 @@
 #!/usr/bin/env ruby
 # trs
 
-# 20180403
-# 0.8.6
+# 20180404
+# 0.9.0
 
-# Changes since 0.7:
-# 1. Removed the concept of having multiple robots and other extras (mainly outputting of the tabletop)
-# 0/1
-# 2. Moved date and version information out of individual files to bin/trs only.
-# 3. Made the handling of switches in bin/trs slightly DRYer(sic).
-# 1/2
-# 4. - ToyRobot#run, since it wasn't working, but also because it lacks robustness to have a robot run itself successfully only somemtimes depending on context, and even though it could be easily fixed.
-# 5. Reworked ToyRobotSimulator significantly to remove a lot of unnecessary handling of instance values and to harmonize with the bells_and_whistles branch.
-# 6. Ruby 2+ only now that it has been dehashrocketified.
-# 7. General tidying and harmonizing between the master and bells_and_whistles branches.
-# 2/3
-# 8. ~ ToyRobotSimulator#run, so that it can accept arguments and not just the defaults.
-# 9. Simplified calling the simulator in bin/trs.
-# 10. Removed trailing spaces.
-# 3/4
-# 11. Reduced the capacity to select an instruction set, since this is the basic version after all.
-# 12. Cleaned up and made work the assigning of defaults for the ToyRobotSimulator class.
-# 13. Reworked the tests so that they pass with the changes made in the previous few commits.
-# 14. + Gemfile
-# 15. Removed gem command from test files.
-# 4/5
-# 16. Gemified Switches to switches.rb, so removed the file and included a line in the Gemfile.
-# 5/6
-# 17. Fixed require of Switches.
-# 18. Fixed the version number.
+# Changes since 0.8:
+# 1. - BasicInstructionSet and rolled the contents into ToyRobot rather than including them from a module.
 
 require 'switches'
 require_relative '../lib/ToyRobotSimulator'
