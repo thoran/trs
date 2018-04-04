@@ -7,7 +7,7 @@
 # Changes since 0.8:
 # 1. - BasicInstructionSet and rolled the contents into ToyRobot rather than including them from a module.
 # 0/1
-# 2. - tabletop_dimensions are no longer settable, though they still exist internally to the Tabletop class.
+# 2. - tabletop_dimensions. tabletop_dimensions are no longer settable, though they still exist internally to the Tabletop class.
 
 require 'switches'
 require_relative '../lib/ToyRobotSimulator'
