@@ -2,10 +2,12 @@
 # trs
 
 # 20180404
-# 0.9.0
+# 0.9.1
 
 # Changes since 0.8:
 # 1. - BasicInstructionSet and rolled the contents into ToyRobot rather than including them from a module.
+# 0/1
+# 2. - tabletop_dimensions are no longer settable, though they still exist internally to the Tabletop class.
 
 require 'switches'
 require_relative '../lib/ToyRobotSimulator'
@@ -13,7 +15,6 @@ require_relative '../lib/ToyRobotSimulator'
 switches = Switches.new do |s|
   s.set(:p, :program) # The name of the program to run as it is in the filesystem.
   s.set(:d, :directory, :programs_directory) # The directory where programs can be found.
-  s.set(:t, :tabletop, :tabletop_dimensions) # The dimensions of the tabletop.
 end
 
 ToyRobotSimulator.run(switches.to_h)

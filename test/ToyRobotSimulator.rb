@@ -9,17 +9,12 @@ describe ToyRobotSimulator do
     it 'must return a ToyRobotSimulator object' do
       ToyRobotSimulator.new.class.must_equal ToyRobotSimulator
     end
-
-    it 'must set the tabletop dimensions via the constructor' do
-      trs = ToyRobotSimulator.new(tabletop_dimensions: '4x5')
-      trs.instance_variable_get(:@tabletop_dimensions).must_equal '4x5'
-    end
   end
 
   describe 'setting attributes' do
     it 'must be able to set the tabletop attribute directly' do
       trs = ToyRobotSimulator.new
-      trs.tabletop = Tabletop.new(4,5)
+      trs.tabletop = Tabletop.new
       trs.instance_variable_get(:@tabletop).class.must_equal Tabletop
     end
   end
@@ -27,7 +22,7 @@ describe ToyRobotSimulator do
   describe 'executing a command' do
     before do
       @trs = ToyRobotSimulator.new
-      @tabletop = Tabletop.new('5x5')
+      @tabletop = Tabletop.new
       @trs.tabletop = @tabletop
       @trs.send(:init_toy_robot)
       @toy_robot = @trs.send(:toy_robot)

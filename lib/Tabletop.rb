@@ -7,12 +7,9 @@ class Tabletop
   attr_accessor :x_dimension
   attr_accessor :y_dimension
 
-  def initialize(x_dimension, y_dimension = nil)
-    if y_dimension.nil?
-      x_dimension, y_dimension = x_dimension.split('x')
-    end
-    @x_dimension = x_dimension.to_i
-    @y_dimension = y_dimension.to_i
+  def initialize
+    @x_dimension = 5
+    @y_dimension = 5
     init_grid
   end
 

@@ -10,7 +10,6 @@ class ToyRobotSimulator
 
   attr_accessor :program
   attr_accessor :programs_directory
-  attr_accessor :tabletop_dimensions
 
   attr_accessor :tabletop
   attr_accessor :toy_robot
@@ -20,7 +19,6 @@ class ToyRobotSimulator
     def defaults
       @defaults ||= {
         programs_directory: File.join(File.dirname(__FILE__), '../programs'),
-        tabletop_dimensions: '5x5',
       }
     end
 
@@ -46,7 +44,6 @@ class ToyRobotSimulator
 
   def set_defaults
     @programs_directory ||= ToyRobotSimulator.defaults[:programs_directory]
-    @tabletop_dimensions ||= ToyRobotSimulator.defaults[:tabletop_dimensions]
   end
 
   def setup
@@ -68,7 +65,7 @@ class ToyRobotSimulator
   private
 
   def init_tabletop
-    @tabletop = Tabletop.new(@tabletop_dimensions)
+    @tabletop = Tabletop.new
   end
 
   def init_toy_robot
