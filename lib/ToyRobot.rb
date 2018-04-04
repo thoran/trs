@@ -3,6 +3,7 @@
 
 require_relative './Thoran/String/InstanceMethods'
 require_relative './ToyRobot/BasicInstructionSet'
+require_relative './ToyRobot/AdvancedInstructionSet'
 require_relative './ToyRobot/CommandListRandomizer'
 require 'observer'
 
@@ -13,8 +14,8 @@ class ToyRobot
   attr_accessor :command_list
   attr_accessor :instruction_set
   attr_accessor :name
-  attr_accessor :tabletop
   attr_accessor :max_ticks
+  attr_accessor :tabletop
   attr_accessor :old_x, :old_y, :old_f
   attr_accessor :x, :y, :f
 
@@ -75,23 +76,6 @@ class ToyRobot
         name
       end
     )
-  end
-
-  def valid_move?
-    if placed?
-      case self.f
-      when 'NORTH'; tabletop.valid_location?(self.x, self.y+1)
-      when 'SOUTH'; tabletop.valid_location?(self.x, self.y-1)
-      when 'EAST'; tabletop.valid_location?(self.x+1, self.y)
-      when 'WEST'; tabletop.valid_location?(self.x-1, self.y)
-      end
-    else
-      false
-    end
-  end
-
-  def unary_instruction?(s)
-    s =~ /PLACE/ ? false : true
   end
 
 end

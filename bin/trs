@@ -1,44 +1,13 @@
 #!/usr/bin/env ruby
 # trs
 
-# 20180403
-# 0.8.6 (bells_and_whistles)
+# 20180404
+# 0.9.0 (bells_and_whistles)
 
-# Note: This branch was initially created by cherry picking the changes on master which caused the version to move from 0.8.0 to 0.8.1 onto master at 0.7.0, which had multiple toy robots, randomized command lists, and visual table output) to create the bells_and_whistles branch.
+# Note: This branch is the continuation of version 0.7 which had multiple toy robots, randomized command lists, and visual table output).
 
-# Changes since 0.6:
-# 1. Removed setting of defaults for programs_directory, since this is now done in ToyRobotSimulator::defaults.
-# 2. Removed setting of defaults for tabletop_dimensions, since this is now done in ToyRobotSimulator::defaults.
-# 3. Removed setting of defaults for number_of_toy_robots, since this is now done in ToyRobotSimulator::defaults.
-# and since 0.8.0, but without the changes from 0.7.0 to 0.8.0 which caused the removal of multiple robots and other extras:
-# 4. Moved date and version information out of individual files to bin/trs only.
-# 5. Made the handling of switches in bin/trs slightly DRYer(sic).
-# since 0.8.1:
-# 6. Removed the concept of extras since having a bells_and_whistles branch makes it less necessary and it simplifies things.
-# 7. - ToyRobot#run, since it wasn't working, but also because it lacks robustness to have a robot run itself successfully only somemtimes depending on context, and even though it could be easily fixed.
-# 8. Reworked ToyRobotSimulator significantly to remove a lot of unnecessary handling of instance values.
-# 9. Ruby 2+ only now that it has been dehashrocketified.
-# 10. Removed the concept of a program and hence program_name and now just have program to mean program name such that it isn't possible to load a program directly into the class at present, but must rather be loaded from the filesystem; so that it is consistent with master in this respect for now at least.
-# 11. Deleted Thoran/File/ClassMethods, since no longer using File.path_without_basename.
-# 12. Altered much of the contents of Thoran/Array/InstanceMethods, since Array#all_but_last (so as to be consistent with master for now) and Array#extract_options! are no longer being used.
-# 13. General tidying and harmonizing between the master and bells_and_whistles branches.
-# 2/3 since 0.8.2:
-# 14. ~ ToyRobotSimulator#run, so that it can accept arguments and not just the defaults.
-# 15. Simplified calling the simulator in bin/trs.
-# 16. Removed trailing spaces.
-# 3/4
-# 17. Cleaned up the randomizing of command lists, clarifying that with changed language to become max_ticks().
-# 18. More clearly allowed for the idea of selecting an instruction set.
-# 19. Allowed the setting of both max_ticks and instruction_set.
-# 20. Cleaned up and made work the assigning of defaults for the ToyRobotSimulator class.
-# 21. Reworked the tests so that they pass with the changes made in the previous few commits.
-# 22. + Gemfile
-# 23. Removed gem command from test files.
-# 4/5
-# 24. Gemified Switches to switches.rb, so removed the file and included a line in the Gemfile.
-# 5/6
-# 25. Fixed require of Switches.
-# 26. Fixed the version number.
+# Changes since 0.8:
+# 1. 
 
 require 'switches'
 require_relative '../lib/ToyRobotSimulator'

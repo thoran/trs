@@ -61,11 +61,11 @@ class ToyRobotSimulator
   end
 
   def run
-    tick_count = -1
-    puts "TICK: #{tick_count += 1}."
+    @tick_count = -1
+    puts "TICK: #{@tick_count += 1}."
     @tabletop.draw
-    until @toy_robots.expired? || tick_count_exceeded?(tick_count)
-      puts "TICK: #{tick_count += 1}."
+    until @toy_robots.expired? || tick_count_exceeded?
+      puts "TICK: #{@tick_count += 1}."
       @toy_robots.each do |toy_robot|
         toy_robot.tick unless toy_robot.expired?
       end
@@ -82,9 +82,9 @@ class ToyRobotSimulator
 
   # boolean methods
 
-  def tick_count_exceeded?(tick_count)
+  def tick_count_exceeded?
     if @max_ticks
-      tick_count > @max_ticks
+      @tick_count > @max_ticks
     else
       false
     end
@@ -114,7 +114,7 @@ class ToyRobotSimulator
     else
       toy_robot.class.send(:include, ToyRobot::CommandListRandomizer)
       toy_robot.max_ticks = 3
-      toy_robot.init_command_list
+      toy_robot.init_command_list(instruction_set: @instruction_set)
     end
     toy_robot.add_observer(self)
     toy_robot

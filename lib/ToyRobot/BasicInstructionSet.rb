@@ -5,7 +5,7 @@ class ToyRobot
   module BasicInstructionSet
 
     def place(x, y, f)
-      if tabletop.valid_location?(x,y)
+      if @tabletop.valid_location?(x,y)
         if placed?
           self.old_x, self.old_y, self.old_f = self.x, self.y, self.f
         else
@@ -74,6 +74,27 @@ class ToyRobot
         puts "#{x},#{y},#{f}"
       end
     end
-
   end
+
+  def valid_move?
+    if placed?
+      case self.f
+      when 'NORTH'; @tabletop.valid_location?(self.x, self.y+1)
+      when 'SOUTH'; @tabletop.valid_location?(self.x, self.y-1)
+      when 'EAST'; @tabletop.valid_location?(self.x+1, self.y)
+      when 'WEST'; @tabletop.valid_location?(self.x-1, self.y)
+      end
+    else
+      false
+    end
+  end
+
+  def unary_instruction?(s)
+    place?(s) ? false : true
+  end
+
+  def place?(s)
+    s =~ /PLACE/
+  end
+
 end
