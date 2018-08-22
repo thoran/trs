@@ -1,6 +1,6 @@
-# trs/test/ToyRobot.rb
+# test/toy_robot_simulator.rb
 
-require_relative '../lib/ToyRobotSimulator'
+require_relative '../lib/toy_robot_simulator'
 require 'minitest/autorun'
 
 describe ToyRobotSimulator do

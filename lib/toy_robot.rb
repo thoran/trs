@@ -1,4 +1,4 @@
-# ToyRobot.rb
+# lib/toy_robot.rb
 # ToyRobot
 
 require 'observer'

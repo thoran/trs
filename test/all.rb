@@ -1,5 +1,5 @@
-# trs/test/all.rb
+# test/all.rb
 
-require_relative './Tabletop'
-require_relative './ToyRobot'
-require_relative './ToyRobotSimulator'
+require_relative './tabletop'
+require_relative './toy_robot'
+require_relative './toy_robot_simulator'

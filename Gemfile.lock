@@ -2,12 +2,14 @@ GEM
   remote: https://rubygems.org/
   specs:
     minitest (5.11.3)
+    switches.rb (0.9.15)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   minitest
+  switches.rb
 
 BUNDLED WITH
-   1.16.1
+   1.16.4

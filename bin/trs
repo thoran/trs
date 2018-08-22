@@ -1,20 +1,24 @@
 #!/usr/bin/env ruby
 # trs
 
-# 20180404
-# 0.9.1
+# 20180822
+# 0.10.0
 
-# Changes since 0.8:
-# 1. - BasicInstructionSet and rolled the contents into ToyRobot rather than including them from a module.
-# 0/1
-# 2. - tabletop_dimensions. tabletop_dimensions are no longer settable, though they still exist internally to the Tabletop class.
+# Changes since 0.9:
+# 1. Now using named arguments instead of hashes in the ToyRobotSimulator initializer.
+# 2. Comletely reworked how defaults are set.
+# 3. Reworked how programs are loaded.
+# 4. Renamed library files to be more consistent with Ruby conventions.
+# 5. Renamed test files to be more consistent with Ruby conventions.
+# 6. Added every variant of the test known to me to /doc.
+# 7. Added a README.
 
 require 'switches'
-require_relative '../lib/ToyRobotSimulator'
+require_relative '../lib/toy_robot_simulator'
 
 switches = Switches.new do |s|
-  s.set(:p, :program) # The name of the program to run as it is in the filesystem.
   s.set(:d, :directory, :programs_directory) # The directory where programs can be found.
+  s.set(:p, :program) # The name of the program to run as it is in the filesystem.
 end
 
 ToyRobotSimulator.run(switches.to_h)
