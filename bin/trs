@@ -10,8 +10,7 @@
 # 3. Reworked how programs are loaded.
 # 4. Renamed library files to be more consistent with Ruby conventions.
 # 5. Renamed test files to be more consistent with Ruby conventions.
-# 6. Added every variant of the test known to me to /doc.
-# 7. Added a README.
+# 6. Added a README.
 
 require 'switches'
 require_relative '../lib/toy_robot_simulator'
