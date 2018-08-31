@@ -13,7 +13,7 @@ class ToyRobot
   attr_accessor :x, :y, :f
 
   def initialize(command_list: nil, tabletop: nil)
-    self.command_list = command_list
+    @command_list = command_list
     @tabletop = tabletop
     @old_x = nil
     @old_y = nil
@@ -24,9 +24,7 @@ class ToyRobot
   end
 
   def load(program)
-    if program
-      @command_list = program.split("\n")
-    end
+    @command_list = program.split("\n")
   end
 
   def tick
@@ -46,11 +44,11 @@ class ToyRobot
   def place(x, y, f)
     if tabletop.valid_location?(x,y)
       if placed?
-        self.old_x, self.old_y, self.old_f = self.x, self.y, self.f
+        @old_x, @old_y, @old_f = @x, @y, @f
       else
-        self.old_x, self.old_y, self.old_f = x, y, f
+        @old_x, @old_y, @old_f = x, y, f
       end
-      self.x, self.y, self.f = x, y, f
+      @x, @y, @f = x, y, f
       changed
       notify_observers(self)
     end
@@ -58,12 +56,12 @@ class ToyRobot
 
   def move
     if valid_move?
-      self.old_x, self.old_y = self.x, self.y
-      case self.f
-      when 'NORTH'; self.old_y = self.y; self.y += 1
-      when 'SOUTH'; self.old_y = self.y; self.y -= 1
-      when 'EAST'; self.old_x = self.x; self.x += 1
-      when 'WEST'; self.old_x = self.x; self.x -= 1
+      @old_x, @old_y = @x, @y
+      case @f
+      when 'NORTH'; @y += 1
+      when 'SOUTH'; @y -= 1
+      when 'EAST'; @x += 1
+      when 'WEST'; @x -= 1
       end
       changed
       notify_observers(self)
@@ -71,27 +69,27 @@ class ToyRobot
   end
 
   def turn(direction)
-    self.old_f = self.f
-    case self.f
+    @old_f = @f
+    case @f
     when 'NORTH'
       case direction.to_sym
-      when :left; self.f = 'WEST'
-      when :right; self.f = 'EAST'
+      when :left; @f = 'WEST'
+      when :right; @f = 'EAST'
       end
     when 'SOUTH'
       case direction.to_sym
-      when :left; self.f = 'EAST'
-      when :right; self.f = 'WEST'
+      when :left; @f = 'EAST'
+      when :right; @f = 'WEST'
       end
     when 'EAST'
       case direction.to_sym
-      when :left; self.f = 'NORTH'
-      when :right; self.f = 'SOUTH'
+      when :left; @f = 'NORTH'
+      when :right; @f = 'SOUTH'
       end
     when 'WEST'
       case direction.to_sym
-      when :left; self.f = 'SOUTH'
-      when :right; self.f = 'NORTH'
+      when :left; @f = 'SOUTH'
+      when :right; @f = 'NORTH'
       end
     end
     changed
@@ -119,18 +117,18 @@ class ToyRobot
   end
 
   def placed?
-    self.x && self.y && self.f ? true : false
+    @x && @y && @f ? true : false
   end
 
   private
 
   def valid_move?
     if placed?
-      case self.f
-      when 'NORTH'; @tabletop.valid_location?(self.x, self.y+1)
-      when 'SOUTH'; @tabletop.valid_location?(self.x, self.y-1)
-      when 'EAST'; @tabletop.valid_location?(self.x+1, self.y)
-      when 'WEST'; @tabletop.valid_location?(self.x-1, self.y)
+      case @f
+      when 'NORTH'; @tabletop.valid_location?(@x, @y+1)
+      when 'SOUTH'; @tabletop.valid_location?(@x, @y-1)
+      when 'EAST'; @tabletop.valid_location?(@x+1, @y)
+      when 'WEST'; @tabletop.valid_location?(@x-1, @y)
       end
     else
       false
