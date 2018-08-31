@@ -33,4 +33,6 @@ A random file in ./programs (relative to this README) is selected.
 
 ## Running The Tests
 
-```$ ruby test/all.rb```
+```
+$ ruby test/all.rb
+```
