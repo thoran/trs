@@ -117,7 +117,7 @@ class ToyRobot
   end
 
   def placed?
-    @x && @y && @f ? true : false
+    @x && @y && @f
   end
 
   private

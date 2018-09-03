@@ -27,7 +27,7 @@ class Tabletop
   end
 
   def valid_location?(x,y)
-    x.to_i.between?(0, x_dimension - 1) && y.to_i.between?(0, y_dimension - 1) ? true : false
+    x.to_i.between?(0, x_dimension - 1) && y.to_i.between?(0, y_dimension - 1)
   end
 
   private
