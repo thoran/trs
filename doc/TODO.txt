@@ -1,0 +1,17 @@
+20190120
+
+* I'd previously mixed in the command methods into the ToyRobot class, then I tried to
+  simplify it and placed them directly in the ToyRobot class, but now that might mean
+  doing so with the CommandParser class.
+* Make the composed CommandParser in ToyRobot injectable, either via a mixin or
+  a composed class or classes.
+* Split out the input parsing stuff from the ToyRobotSimulator class.
+* Write a few more tests, particulary moving those which are in ToyRobot to CommandParser.
+* Remove the 2 dimensional array from Tabletop and only use a single tuple in ToyRobot.
+* Create a branch with a super simple version.
+* Finish the complex commands branch.
+* Enable dynamically loadable commands.
+* The CommandParser class is polluted with robot commands methods and non-robot command
+  methods, so separating those would be good.
+* Consider making each command its own class.
+* Consider adding a ToyRobot namespace.

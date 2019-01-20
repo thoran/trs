@@ -48,23 +48,23 @@ describe ToyRobotSimulator do
       @toy_robot.load(command)
       assert_nil(@toy_robot.instance_variable_get(:@x))
       assert_nil(@toy_robot.instance_variable_get(:@y))
-      assert_nil(@toy_robot.instance_variable_get(:@f))
+      assert_nil(@toy_robot.instance_variable_get(:@facing))
       @trs.run
       assert_nil(@toy_robot.instance_variable_get(:@x))
       assert_nil(@toy_robot.instance_variable_get(:@y))
-      assert_nil(@toy_robot.instance_variable_get(:@f))
+      assert_nil(@toy_robot.instance_variable_get(:@facing))
     end
 
     it 'must be able to turn left' do
       @toy_robot.place(0,0,'NORTH')
       @toy_robot.left
-      @toy_robot.f.must_equal 'WEST'
+      @toy_robot.facing.must_equal 'WEST'
     end
 
     it 'must be able to turn right' do
       @toy_robot.place(0,0,'NORTH')
       @toy_robot.right
-      @toy_robot.instance_variable_get(:@f).must_equal 'EAST'
+      @toy_robot.instance_variable_get(:@facing).must_equal 'EAST'
     end
 
     it 'must be able to move' do
@@ -72,7 +72,7 @@ describe ToyRobotSimulator do
       @toy_robot.move
       @toy_robot.instance_variable_get(:@x).must_equal 0
       @toy_robot.instance_variable_get(:@y).must_equal 1
-      @toy_robot.instance_variable_get(:@f).must_equal 'NORTH'
+      @toy_robot.instance_variable_get(:@facing).must_equal 'NORTH'
     end
 
     it 'must be able to report' do
@@ -86,7 +86,7 @@ describe ToyRobotSimulator do
       @toy_robot.move
       @toy_robot.instance_variable_get(:@x).must_equal 0
       @toy_robot.instance_variable_get(:@y).must_equal 0
-      @toy_robot.instance_variable_get(:@f).must_equal 'WEST'
+      @toy_robot.instance_variable_get(:@facing).must_equal 'WEST'
     end
   end
 

@@ -1,5 +1,4 @@
 # lib/tabletop.rb
-# Tabletop
 
 class Tabletop
 
@@ -27,7 +26,7 @@ class Tabletop
   end
 
   def valid_location?(x,y)
-    x.to_i.between?(0, x_dimension - 1) && y.to_i.between?(0, y_dimension - 1)
+    valid_x_location?(x) && valid_y_location?(y)
   end
 
   private
@@ -37,6 +36,14 @@ class Tabletop
     (0..x_dimension - 1).inject(@grid) do |a,e|
       a << (0..y_dimension - 1).inject([]){|b,f| b << nil}
     end
+  end
+
+  def valid_x_location?(x)
+    x.to_i.between?(0, x_dimension - 1)
+  end
+
+  def valid_y_location?(y)
+    y.to_i.between?(0, y_dimension - 1)
   end
 
 end

@@ -1,5 +1,4 @@
 # lib/toy_robot_simulator.rb
-# ToyRobotSimulator
 
 require_relative './toy_robot'
 require_relative './tabletop'

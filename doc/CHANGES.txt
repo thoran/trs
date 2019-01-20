@@ -1,0 +1,23 @@
+0.10.0
+* Now using named arguments instead of hashes in the ToyRobotSimulator initializer.
+* Completely reworked how defaults are set.
+* Reworked how programs are loaded.
+* Renamed library files to be more consistent with Ruby conventions.
+* Renamed test files to be more consistent with Ruby conventions.
+* Added a README.
+
+0.10.1
+* Cleaned up ToyRobot class so as it uses instance variables internally.
+* Removed an unnecessary if in ToyRobot#load, since an error will occur if no program is supplied anyway!
+
+20180903
+0.10.2
+* Unnecessary use of ternaries removed.
+
+20190119
+0.11.0
+* + CommandParser class since I thought it would be cleaner to have a composible command parser.
+* + UnplacedToyRobotError class, so as to propogate a command parser error up to ToyRobot easily.
+* Fixed all the breaking tests, which was a good chunk of them.
+* + CHANGES.txt
+* + TODO.txt
