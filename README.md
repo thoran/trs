@@ -62,7 +62,7 @@ arbitrary size axes, and any number of robots.  In this context I decided it was
 to create an n-dimensional array to store robot locations in the tabletop than it was to interrogate each robot via
 use of Ruby's ObjectSpace or via registration of robots in a class instance variable in the ToyRobot class so as to
 be able to figure out where a robot could move to given the assumption of 1 robot per tuple in the n-dimensional
-array and in order to make the job to make the job of outputting the current state of the array slightly easier.
+array and in order to make the job of outputting the current state of the array slightly easier.
 
 It's also difficult with coding exercises to adjudge as to when something is too much or too little.  Obviously my
 earlier design with parameterized everything was too much and I was having fun doing a little extra to show-off.
@@ -74,5 +74,5 @@ For instance, while I may yet do it, I have chosen not to split out each of the 
 even if it might demonstrate good design, since it might also be seen as an an unnecessary contrivance.  Which is
 correct?
 
-I have started down the process of creating a branch for each of the other significantly different version of this.
-Still missing is an at least even simpler version.
+I have started down the process of creating a branch for each of the other significantly different versions of this.
+Still missing is an even simpler version.
