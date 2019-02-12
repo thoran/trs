@@ -29,15 +29,16 @@ describe ToyRobotSimulator do
     end
 
     it 'must remove the next command from the command list' do
-      @toy_robot.load('PLACE 0,0,NORTH')
+      program = 'PLACE 0,0,NORTH'
+      @toy_robot.load(program)
       @toy_robot.send(:command_list).must_equal ['PLACE 0,0,NORTH']
       @trs.run
       @toy_robot.send(:command_list).must_equal []
     end
 
     it 'must be able to be place a robot on the tabletop' do
-      command = 'PLACE 0,0,NORTH'
-      @toy_robot.load(command)
+      program = 'PLACE 0,0,NORTH'
+      @toy_robot.load(program)
       assert_nil(@tabletop[0,0])
       @trs.run
       @tabletop[0,0].must_equal @toy_robot
@@ -56,34 +57,40 @@ describe ToyRobotSimulator do
     end
 
     it 'must be able to turn left' do
-      @toy_robot.place(0,0,'NORTH')
-      @toy_robot.left
+      program = "PLACE 0,0,NORTH\nLEFT\n"
+      @toy_robot.load(program)
+      @trs.run
       @toy_robot.facing.must_equal 'WEST'
     end
 
     it 'must be able to turn right' do
-      @toy_robot.place(0,0,'NORTH')
-      @toy_robot.right
+      program = "PLACE 0,0,NORTH\nRIGHT\n"
+      @toy_robot.load(program)
+      @trs.run
       @toy_robot.instance_variable_get(:@facing).must_equal 'EAST'
     end
 
     it 'must be able to move' do
-      @toy_robot.place(0,0,'NORTH')
-      @toy_robot.move
+      program = "PLACE 0,0,NORTH\nMOVE\n"
+      @toy_robot.load(program)
+      @trs.run
       @toy_robot.instance_variable_get(:@x).must_equal 0
       @toy_robot.instance_variable_get(:@y).must_equal 1
       @toy_robot.instance_variable_get(:@facing).must_equal 'NORTH'
     end
 
     it 'must be able to report' do
-      @toy_robot.place(0,0,'NORTH')
-      lambda{@toy_robot.report}.must_output "0,0,NORTH\n"
+      program = "PLACE 0,0,NORTH\n"
+      @toy_robot.load(program)
+      @trs.run
+      @toy_robot.load('report')
+      lambda{@toy_robot.instance_variable_get(:@command_parser).report}.must_output "0,0,NORTH\n"
     end
 
-    it 'must ignore any commands that would cause the toy robot to exit the stage in an unfortunate fashion' do
-      @toy_robot.place(0,0,'NORTH')
-      @toy_robot.left
-      @toy_robot.move
+    it 'must ignore any commands that would cause the toy robot to exit the tabletop in an unfortunate fashion' do
+      program = "PLACE 0,0,NORTH\nLEFT\nMOVE\n"
+      @toy_robot.load(program)
+      @trs.run
       @toy_robot.instance_variable_get(:@x).must_equal 0
       @toy_robot.instance_variable_get(:@y).must_equal 0
       @toy_robot.instance_variable_get(:@facing).must_equal 'WEST'

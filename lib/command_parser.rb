@@ -16,17 +16,20 @@ class CommandParser
 
   def next
     if current_command = @command_list.shift
-      if unary_instruction?(current_command)
-        if toy_robot.placed?
-          self.send(current_command.downcase)
-        else
-          raise UnplacedToyRobotError
+      if valid_command?(current_command)
+        if unary_command?(current_command)
+          if toy_robot.placed?
+            self.send(current_command.downcase)
+          else
+            raise UnplacedToyRobotError
+          end
+        else # PLACE the robot!
+          command, arguments = current_command.split
+          x, y, facing = arguments.split(',')
+          self.send(command.downcase, x.to_i, y.to_i, facing)
         end
-      else
-        command, arguments = current_command.split
-        x, y, facing = arguments.split(',')
-        self.send(command.downcase, x.to_i, y.to_i, facing)
       end
+      # Just ignoring dud instructions.
     end
   end
 
@@ -44,39 +47,15 @@ class CommandParser
   def move
     if toy_robot.valid_move?
       toy_robot.old_x, toy_robot.old_y = toy_robot.x, toy_robot.y
-      case toy_robot.facing
-      when 'NORTH'; toy_robot.y += 1
-      when 'SOUTH'; toy_robot.y -= 1
-      when 'EAST'; toy_robot.x += 1
-      when 'WEST'; toy_robot.x -= 1
-      end
+      toy_robot.x += movements[toy_robot.facing.downcase.to_sym].first
+      toy_robot.y += movements[toy_robot.facing.downcase.to_sym].last
     end
   end
 
+
   def turn(direction)
     toy_robot.old_facing = toy_robot.facing
-    case toy_robot.facing
-    when 'NORTH'
-      case direction.to_sym
-      when :left; toy_robot.facing = 'WEST'
-      when :right; toy_robot.facing = 'EAST'
-      end
-    when 'SOUTH'
-      case direction.to_sym
-      when :left; toy_robot.facing = 'EAST'
-      when :right; toy_robot.facing = 'WEST'
-      end
-    when 'EAST'
-      case direction.to_sym
-      when :left; toy_robot.facing = 'NORTH'
-      when :right; toy_robot.facing = 'SOUTH'
-      end
-    when 'WEST'
-      case direction.to_sym
-      when :left; toy_robot.facing = 'SOUTH'
-      when :right; toy_robot.facing = 'NORTH'
-      end
-    end
+    toy_robot.facing = turns[toy_robot.facing.downcase.to_sym][direction.to_sym]
   end
 
   def left
@@ -97,8 +76,31 @@ class CommandParser
 
   private
 
-  def unary_instruction?(s)
-    s !~ /PLACE/
+  def movements
+    {
+      north: [0, 1],
+      south: [0, -1],
+      east:  [1, 0],
+      west:  [-1, 0],
+    }
+  end
+
+  def turns
+    {
+      north: {left: 'WEST', right: 'EAST'},
+      south: {left: 'EAST', right: 'WEST'},
+      east:  {left: 'NORTH', right: 'SOUTH'},
+      west:  {left: 'SOUTH', right: 'NORTH'},
+    }
+  end
+
+  def unary_command?(command)
+    command !~ /PLACE/
+  end
+
+  def valid_command?(command)
+    command.strip =~ /PLACE \d, *\d, *(NORTH|SOUTH|EAST|WEST)/ ||
+    %w{MOVE LEFT RIGHT REPORT}.include?(command.strip)
   end
 
 end

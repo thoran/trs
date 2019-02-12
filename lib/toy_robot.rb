@@ -42,18 +42,6 @@ class ToyRobot
     @command_parser.command_list
   end
 
-  # I thought about using delegation, but would need to do additional work around dynamically
-  # creating those delegates depending if the set of commands is injectable, which sounds like a
-  # reasonable challenge and it would allow for ensuring that the toy robot isn't being
-  # given dud commands.  So for now it was either this or enumerating a fixed set of delegates.
-  # And really, having methods which are delegated explicitly or implicitly is probably not ideal,
-  # and I could do away with the need for this and delegates if I were to change the tests to
-  # reflect the changes which have accrued by virtue of having a separate CommandParser class,
-  # since this works just fine without, excepting for when being tested.
-  def method_missing(method_name, *args, &block)
-    @command_parser.send(method_name, *args, &block)
-  end
-
   def expired?
     @command_parser.command_list.empty?
   end
