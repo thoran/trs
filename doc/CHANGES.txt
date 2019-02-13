@@ -21,3 +21,8 @@
 * Fixed all the breaking tests, which was a good chunk of them.
 * + CHANGES.txt
 * + TODO.txt
+
+20190212
+0.12.0
+* + ProgramLoader so as to clean up ToyRobotSimulator some.
+* - ToyRobot#method_missing, since I have ~ test/toy_robot_simulator.
