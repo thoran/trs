@@ -1,5 +1,7 @@
 # lib/command_parser.rb
 
+class UnplacedToyRobotError < StandardError; end
+
 class CommandParser
 
   attr_accessor :command_list
@@ -41,6 +43,8 @@ class CommandParser
         toy_robot.old_x, toy_robot.old_y, toy_robot.old_facing = x, y, facing
       end
       toy_robot.x, toy_robot.y, toy_robot.facing = x, y, facing
+    else
+      raise UnplacedToyRobotError
     end
   end
 
@@ -51,7 +55,6 @@ class CommandParser
       toy_robot.y += movements[toy_robot.facing.downcase.to_sym].last
     end
   end
-
 
   def turn(direction)
     toy_robot.old_facing = toy_robot.facing
@@ -99,8 +102,8 @@ class CommandParser
   end
 
   def valid_command?(command)
-    command.strip =~ /PLACE \d, *\d, *(NORTH|SOUTH|EAST|WEST)/ ||
-    %w{MOVE LEFT RIGHT REPORT}.include?(command.strip)
+    command.strip =~ /PLACE \d+, *\d+, *(NORTH|SOUTH|EAST|WEST)/ ||
+      %w{MOVE LEFT RIGHT REPORT}.include?(command.strip)
   end
 
 end

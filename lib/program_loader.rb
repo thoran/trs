@@ -30,10 +30,8 @@ class ProgramLoader
 
   end # class << self
 
-  attr_accessor :program
-
   def initialize(**args)
-    @program = args[:program] || self.class.default_program
+    @program_name = args[:program_name] || self.class.default_program
     @programs_directory = args[:programs_directory] || self.class.default_programs_directory
   end
 
@@ -44,15 +42,15 @@ class ProgramLoader
   private
 
   def filename
-    if File.exist?(File.join(@programs_directory, @program + '.program'))
-      File.join(@programs_directory, @program + '.program')
-    elsif File.exist?(File.join(@programs_directory, @program)) && File.extname(@program) == '.program'
-      File.join(@programs_directory, @program)
+    if File.exist?(File.join(@programs_directory, @program_name + '.program'))
+      File.join(@programs_directory, @program_name + '.program')
+    elsif File.exist?(File.join(@programs_directory, @program_name)) && File.extname(@program_name) == '.program'
+      File.join(@programs_directory, @program_name)
     else
       raise ProgramNotFoundError
     end
   rescue ProgramNotFoundError => e
-    puts "Program '#{@program}' not found."
+    puts "Program '#{@program_name}' not found."
     exit
   end
 

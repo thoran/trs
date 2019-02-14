@@ -1,8 +1,8 @@
 # lib/toy_robot_simulator.rb
 
 require_relative './program_loader'
-require_relative './toy_robot'
 require_relative './tabletop'
+require_relative './toy_robot'
 
 class ToyRobotSimulator
 
@@ -10,7 +10,8 @@ class ToyRobotSimulator
 
     def defaults
       @defaults ||= {
-        program: ProgramLoader.new.load,
+        program_name: ProgramLoader.default_program,
+        program_directory: ProgramLoader.default_programs_directory,
       }
     end
 
@@ -22,13 +23,11 @@ class ToyRobotSimulator
 
   end # class << self
 
-  attr_accessor :program
   attr_accessor :tabletop
   attr_accessor :toy_robot
 
   def initialize(**switches)
-    assign_ivars(switches)
-    set_defaults
+    @switches = switches
   end
 
   def setup
@@ -40,6 +39,8 @@ class ToyRobotSimulator
     until @toy_robot.expired?
       @toy_robot.tick
     end
+  rescue UnplacedToyRobotError
+    puts "The toy robot could not be placed on the tabletop given the instructions presented."
   end
 
   def update(toy_robot)
@@ -48,18 +49,9 @@ class ToyRobotSimulator
 
   private
 
-  def assign_ivars(switches)
-    switches.each do |k,v|
-      instance_variable_set("@#{k}", v)
-    end
-  end
-
-  def set_defaults
-    ToyRobotSimulator.defaults.each do |default_name, default_value|
-      if instance_variable_get("@#{default_name}").nil?
-        instance_variable_set("@#{default_name}", default_value)
-      end
-    end
+  def program
+    program_loader = ProgramLoader.new(@switches)
+    program_loader.load
   end
 
   def init_tabletop

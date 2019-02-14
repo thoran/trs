@@ -1,15 +1,12 @@
 #!/usr/bin/env ruby
 # trs
 
-# 20190119
-# 0.11.0
-
 require 'switches'
 require_relative '../lib/toy_robot_simulator'
 
 switches = Switches.new do |s|
   s.set(:d, :directory, :programs_directory) # The directory where programs can be found.
-  s.set(:p, :program) # The name of the program to run as it is in the filesystem.
+  s.set(:p, :program_name) # The name of the program to run as it is in the filesystem.
 end
 
 ToyRobotSimulator.run(switches.to_h)

@@ -3,8 +3,6 @@
 require 'observer'
 require_relative 'command_parser'
 
-class UnplacedToyRobotError < StandardError; end
-
 class ToyRobot
 
   include Observable
@@ -35,7 +33,6 @@ class ToyRobot
     @command_parser.next
     changed
     notify_observers(self)
-  rescue UnplacedToyRobotError
   end
 
   def command_list
