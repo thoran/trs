@@ -28,6 +28,7 @@
 * - ToyRobot#method_missing, since I have ~ test/toy_robot_simulator.
 
 20190214
-0.12.1
+0.13.0
 * Fixed the loading of programs when the program is specified and feels much cleaner in ToyRobotSimulator now.
 * Fixed the loading of g.program because after some changes it began to mishandle a bad placement.
+* Did some redesign of how switches are handled and errors and handled in order to solve the above issues.
