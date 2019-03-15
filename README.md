@@ -57,12 +57,7 @@ move.  And finally, once the robot has moved it informs the umbrella code (the T
 turn updates the tabletop.
 
 So, perhaps it would help to know some of the rationale for at how the solution was arrived.  When I first wrote this
-I over-did it.  I created a solution which parameterised everything, such that one could have an n-dimensional space,
-arbitrary size axes, and any number of robots.  In this context I decided it was easier, though less space efficient,
-to create an n-dimensional array to store robot locations in the tabletop than it was to interrogate each robot via
-use of Ruby's ObjectSpace or via registration of robots in a class instance variable in the ToyRobot class so as to
-be able to figure out where a robot could move to given the assumption of 1 robot per tuple in the n-dimensional
-array and in order to make the job of outputting the current state of the array slightly easier.
+I over-did it.  I created a solution which parameterised everything, such that one could have arbitrary size axes, and any number of robots.  In this context I decided it was easier, though less space efficient, to create an array to store robot locations in the tabletop than it was to interrogate each robot via use of Ruby's ObjectSpace or via registration of robots in a class instance variable in the ToyRobot class so as to be able to figure out where a robot could move to given the assumption of 1 robot per tuple in the array and in order to make the job of outputting the current state of the array slightly easier.
 
 It's also difficult with coding exercises to adjudge as to when something is too much or too little.  Obviously my
 earlier design with parameterized everything was too much and I was having fun doing a little extra to show-off.
