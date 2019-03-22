@@ -51,10 +51,7 @@ functionality, did affect the readability of the solution.
 
 The idea I had in mind when I created this was to have a robot which wasn't merely a token on a board, but rather
 had the capacity to operate itself at some level.  This is why the robot has the board and the instructions loaded
-into it.  After initialization it merely receives a tick and it does the rest, interrogating its copy of the
-tabletop to be sure of it's next move and interpreting the instructions itself rather than being told where to
-move.  And finally, once the robot has moved it informs the umbrella code (the ToyRobotSimulator class) and that in
-turn updates the tabletop.
+into it.  After initialization it merely receives a tick and it does the rest, interrogating the tabletop to be sure of it's next move and interpreting the instructions itself rather than being told where to move.  And finally, once the robot has moved it informs the umbrella code (the ToyRobotSimulator class) and that in turn updates the tabletop.
 
 So, perhaps it would help to know some of the rationale for at how the solution was arrived.  When I first wrote this
 I over-did it.  I created a solution which parameterised everything, such that one could have arbitrary size axes, and any number of robots.  In this context I decided it was easier, though less space efficient, to create an array to store robot locations in the tabletop than it was to interrogate each robot via use of Ruby's ObjectSpace or via registration of robots in a class instance variable in the ToyRobot class so as to be able to figure out where a robot could move to given the assumption of 1 robot per tuple in the array and in order to make the job of outputting the current state of the array slightly easier.
