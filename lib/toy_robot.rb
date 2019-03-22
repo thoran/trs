@@ -40,7 +40,7 @@ class ToyRobot
   end
 
   def expired?
-    @command_parser.command_list.empty?
+    command_list.empty?
   end
 
   def placed?
