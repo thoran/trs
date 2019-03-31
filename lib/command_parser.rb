@@ -37,11 +37,6 @@ class CommandParser
 
   def place(x, y, facing)
     if toy_robot.tabletop.valid_location?(x,y)
-      if toy_robot.placed?
-        toy_robot.old_x, toy_robot.old_y, toy_robot.old_facing = toy_robot.x, toy_robot.y, toy_robot.facing
-      else
-        toy_robot.old_x, toy_robot.old_y, toy_robot.old_facing = x, y, facing
-      end
       toy_robot.x, toy_robot.y, toy_robot.facing = x, y, facing
     else
       raise UnplacedToyRobotError
@@ -50,14 +45,12 @@ class CommandParser
 
   def move
     if toy_robot.valid_move?
-      toy_robot.old_x, toy_robot.old_y = toy_robot.x, toy_robot.y
       toy_robot.x += movements[toy_robot.facing.downcase.to_sym].first
       toy_robot.y += movements[toy_robot.facing.downcase.to_sym].last
     end
   end
 
   def turn(direction)
-    toy_robot.old_facing = toy_robot.facing
     toy_robot.facing = turns[toy_robot.facing.downcase.to_sym][direction.to_sym]
   end
 

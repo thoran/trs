@@ -9,15 +9,11 @@ class ToyRobot
 
   attr_accessor :program
   attr_accessor :tabletop
-  attr_accessor :old_x, :old_y, :old_facing
   attr_accessor :x, :y, :facing
 
   def initialize(program: nil, tabletop: nil)
     @program = program
     @tabletop = tabletop
-    @old_x = nil
-    @old_y = nil
-    @old_facing = nil
     @x = nil
     @y = nil
     @facing = nil

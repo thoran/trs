@@ -13,7 +13,6 @@ class Tabletop
   end
 
   def update(toy_robot)
-    grid[toy_robot.old_x][toy_robot.old_y] = nil
     grid[toy_robot.x][toy_robot.y] = toy_robot
   end
 
