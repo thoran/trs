@@ -32,3 +32,30 @@
 * Fixed the loading of programs when the program is specified and feels much cleaner in ToyRobotSimulator now.
 * Fixed the loading of g.program because after some changes it began to mishandle a bad placement.
 * Did some redesign of how switches are handled and errors and handled in order to solve the above issues.
+
+20231214
+0.14.0
+* Remove @grid from Tabletop since I could get by without, particularly now that we've returned to a single robot.
+* Remove observer pattern from ToyRobot and from ToyRobotSimulator since it wasn't necessary and added a layer of unnecessary complexity.
+* Added separate classes for each command...
+* - CommandParser#left
+* + Commands::Left
+* - CommandParser#move
+* + Commands::Move
+* - CommandParser#place
+* + Commands::Place
+* - CommandParser#report
+* + Commands::Report
+* - CommandParser#right
+* + Commands::Right
+* - CommandParser#turn
+* - CommandParser#movements
+* - CommandParser#turns
+* + Turning
+* Combine methods into ToyRobotSimulator#setup...
+* ~ ToyRobotSimulator: - init_tabletop
+* ~ ToyRobotSimulator: - init_toy_robot
+* ~ ToyRobotSimulator#setup: Directly do initialisation of @tabletop and @toy_robot.
+* Rework all the tests...
+* Move most tests from ToyRobotSimulator test to ToyRobot test.
+* Remove trivial tests.

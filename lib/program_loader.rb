@@ -3,15 +3,13 @@
 class ProgramNotFoundError < RuntimeError; end
 
 class ProgramLoader
-
   class << self
+    def default_program
+      random_program(default_programs_directory)
+    end
 
     def default_programs_directory
       File.join(File.dirname(__FILE__), '../programs')
-    end
-
-    def default_program
-      random_program(default_programs_directory)
     end
 
     def random_program(programs_directory)
@@ -22,12 +20,11 @@ class ProgramLoader
         else
           File.basename(program_filenames[rand(program_filenames.size)])
         end
-      rescue ProgramNotFoundError => e
+      rescue ProgramNotFoundError
         puts "No program found."
         exit
       end
     end
-
   end # class << self
 
   def initialize(**args)
@@ -49,9 +46,8 @@ class ProgramLoader
     else
       raise ProgramNotFoundError
     end
-  rescue ProgramNotFoundError => e
+  rescue ProgramNotFoundError
     puts "Program '#{@program_name}' not found."
     exit
   end
-
 end

@@ -1,13 +1,8 @@
 # lib/toy_robot.rb
 
-require 'observer'
 require_relative 'command_parser'
 
 class ToyRobot
-
-  include Observable
-
-  attr_accessor :program
   attr_accessor :tabletop
   attr_accessor :x, :y, :facing
 
@@ -27,8 +22,6 @@ class ToyRobot
 
   def tick
     @command_parser.next
-    changed
-    notify_observers(self)
   end
 
   def command_list
@@ -46,14 +39,13 @@ class ToyRobot
   def valid_move?
     if placed?
       case @facing
-      when 'NORTH'; @tabletop.valid_location?(@x, @y+1)
-      when 'SOUTH'; @tabletop.valid_location?(@x, @y-1)
-      when 'EAST'; @tabletop.valid_location?(@x+1, @y)
-      when 'WEST'; @tabletop.valid_location?(@x-1, @y)
+      when 'NORTH'; @tabletop.valid_location?(@x, @y + 1)
+      when 'SOUTH'; @tabletop.valid_location?(@x, @y - 1)
+      when 'EAST'; @tabletop.valid_location?(@x + 1, @y)
+      when 'WEST'; @tabletop.valid_location?(@x - 1, @y)
       end
     else
       false
     end
   end
-
 end

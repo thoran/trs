@@ -1,9 +1,14 @@
 # lib/command_parser.rb
 
-class UnplacedToyRobotError < StandardError; end
+require_relative './unplaced_toy_robot_error'
+
+command_files = Dir.glob(File.expand_path('../commands/*', __FILE__))\
+  .reject{|command_file| command_file.match(/base/)}\
+  .reject{|command_file| File.directory?(command_file)}
+
+command_files.each{|command_file| require command_file}
 
 class CommandParser
-
   attr_accessor :command_list
   attr_accessor :toy_robot
 
@@ -21,74 +26,22 @@ class CommandParser
       if valid_command?(current_command)
         if unary_command?(current_command)
           if toy_robot.placed?
-            self.send(current_command.downcase)
+            Object.const_get("Commands::#{current_command.capitalize}").run(toy_robot: toy_robot)
           else
             raise UnplacedToyRobotError
           end
         else # PLACE the robot!
-          command, arguments = current_command.split
+          _command, arguments = current_command.split
           x, y, facing = arguments.split(',')
-          self.send(command.downcase, x.to_i, y.to_i, facing)
+          Commands::Place.run(toy_robot: toy_robot, x: x.to_i, y: y.to_i, facing: facing)
         end
+      else
+        raise "Invalid command"
       end
-      # Just ignoring dud instructions.
-    end
-  end
-
-  def place(x, y, facing)
-    if toy_robot.tabletop.valid_location?(x,y)
-      toy_robot.x, toy_robot.y, toy_robot.facing = x, y, facing
-    else
-      raise UnplacedToyRobotError
-    end
-  end
-
-  def move
-    if toy_robot.valid_move?
-      toy_robot.x += movements[toy_robot.facing.downcase.to_sym].first
-      toy_robot.y += movements[toy_robot.facing.downcase.to_sym].last
-    end
-  end
-
-  def turn(direction)
-    toy_robot.facing = turns[toy_robot.facing.downcase.to_sym][direction.to_sym]
-  end
-
-  def left
-    turn(:left)
-  end
-
-  def right
-    turn(:right)
-  end
-
-  def report
-    unless toy_robot.x && toy_robot.y && toy_robot.facing
-      puts "-,-,-"
-    else
-      puts "#{toy_robot.x},#{toy_robot.y},#{toy_robot.facing}"
     end
   end
 
   private
-
-  def movements
-    {
-      north: [0, 1],
-      south: [0, -1],
-      east:  [1, 0],
-      west:  [-1, 0],
-    }
-  end
-
-  def turns
-    {
-      north: {left: 'WEST', right: 'EAST'},
-      south: {left: 'EAST', right: 'WEST'},
-      east:  {left: 'NORTH', right: 'SOUTH'},
-      west:  {left: 'SOUTH', right: 'NORTH'},
-    }
-  end
 
   def unary_command?(command)
     command !~ /PLACE/
@@ -98,5 +51,4 @@ class CommandParser
     command.strip =~ /PLACE \d+, *\d+, *(NORTH|SOUTH|EAST|WEST)/ ||
       %w{MOVE LEFT RIGHT REPORT}.include?(command.strip)
   end
-
 end

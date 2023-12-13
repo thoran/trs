@@ -9,4 +9,4 @@ switches = Switches.new do |s|
   s.set(:p, :program_name) # The name of the program to run as it is in the filesystem.
 end
 
-ToyRobotSimulator.run(switches.to_h)
+ToyRobotSimulator.run(**switches.to_h)
